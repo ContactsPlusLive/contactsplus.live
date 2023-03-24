@@ -1,6 +1,6 @@
-# Contacts Plus homepage
+<img src="public/img/contactsplus_white.png" width="25%" />
 
-<img src="public/img/contactsplus_white.png" width="25%" style="float: right;" />
+# Contacts Plus homepage
 
 Welcome to the development repository for https://www.contactsplus.live. The website is built with Node.js, [Astro](https://astro.build), and [Tailwind](https://tailwindcss.com).
 
