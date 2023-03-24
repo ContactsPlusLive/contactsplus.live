@@ -1,0 +1,17 @@
+---
+let year =
+  new Date().getFullYear() == 2023
+    ? 2023
+    : `2023 - ${new Date().getFullYear()}`;
+---
+
+<footer
+  class="h-12 border-t border-slate-600 shadow-lg flex justify-center items-center"
+>
+  <span
+    >&copy; {year} Contacts Plus - <a
+      class="hover:underline"
+      href="https://source.n00t.io/ContactsPlus/contactsplus.live">Source</a
+    ></span
+  >
+</footer>

@@ -1,0 +1,99 @@
+---
+---
+
+<script>
+  const header = document.getElementById("header")!;
+
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 0) {
+      header.classList.add("bg-red-800");
+      header.classList.remove("bg-slate-900", "border-b");
+    } else {
+      header.classList.add("bg-slate-900", "border-b");
+      header.classList.remove("bg-red-800");
+    }
+  });
+</script>
+
+<script is:inline>
+  function toggleMobileMenu() {
+    const mobileMenu = document.getElementById("mobile-menu");
+    mobileMenu.classList.toggle("translate-x-full");
+  }
+</script>
+
+<header
+  id="header"
+  class="sticky top-0 h-16 bg-slate-900 border-b border-slate-600 shadow-lg flex justify-center items-center transition-all w-screen overflow-x-clip"
+>
+  <div class="w-4/5 md:w-3/5 flex flex-row justify-between sm:justify-start">
+    <a href="/"><img src="/img/contactsplus_white.png" class="h-10 w-auto" /></a
+    >
+    <nav
+      class="hidden font-semibold ml-10 sm:flex flex-row items-center space-x-5"
+    >
+      <a href="#" class="hover:underline">Home</a>
+      <a href="#" class="hover:underline">About</a>
+      <a href="#" class="hover:underline">Episodes</a>
+      <a href="#" class="hover:underline">Contact</a>
+    </nav>
+    <div class="text-right flex sm:hidden">
+      <button
+        type="button"
+        class="p-2 inline-flex items-center justify-center rounded-md focus:ring"
+        onclick="toggleMobileMenu()"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <nav
+    id="mobile-menu"
+    class="absolute top-0 right-0 h-screen w-96 bg-red-800 border-l border-slate-900 transition-transform duration-200 translate-x-full sm:hidden"
+  >
+    <div class="m-8 flex flex-col items-start">
+      <button
+        type="button"
+        class="p-2 inline-flex items-center justify-center rounded-md focus:ring"
+        onclick="toggleMobileMenu()"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+        </svg>
+      </button>
+      <div
+        class="ml-3 font-semibold text-lg flex flex-col items-start space-y-2"
+      >
+        <a href="#" class="focus:underline">Home</a>
+        <a href="#" class="focus:underline">About</a>
+        <a href="#" class="focus:underline">Episodes</a>
+        <a href="#" class="focus:underline">Contact</a>
+      </div>
+    </div>
+  </nav>
+</header>
