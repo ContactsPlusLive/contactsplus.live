@@ -63,9 +63,13 @@
 
   <nav
     id="mobile-menu"
-    class="absolute top-0 right-0 h-screen w-96 bg-red-800 border-l border-slate-900 transition-transform duration-200 translate-x-full sm:hidden"
+    class="absolute top-0 right-0 h-screen w-full transition-transform duration-200 translate-x-full flex flex-row sm:hidden"
   >
-    <div class="m-8 flex flex-col items-start">
+    <button onclick="toggleMobileMenu()" class="h-screen w-1/6 cursor-default"
+    ></button>
+    <div
+      class="bg-red-800 border-l h-screen w-5/6 border-slate-900 p-8 flex flex-col items-start"
+    >
       <button
         type="button"
         class="p-2 inline-flex items-center justify-center rounded-md focus:ring"
