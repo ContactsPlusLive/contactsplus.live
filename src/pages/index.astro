@@ -8,8 +8,220 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   }
 </style>
 
-<BaseLayout title="Contacts Plus">
+<script>
+  const watchNow: HTMLElement = document.getElementById("watch-now")!;
+
+  watchNow.addEventListener("mouseover", () => {
+    if (
+      watchNow.innerText != "Touch the cow, do it now" &&
+      Math.random() > 0.97
+    ) {
+      watchNow.innerText = "Touch the cow, do it now";
+    }
+  });
+</script>
+
+<BaseLayout title="Contacts Plus - Metaverse Content">
   <main class="flex flex-col items-center w-full min-h-content">
-    <artcle class="w-4/5 md:w-3/5"></artcle>
+    <artcle class="w-full flex space-y-10 last:mb-10 flex-col items-center">
+      <div class="relative isolate bg-black w-full h-[37rem] overflow-hidden">
+        <img
+          src="/img/hero-image-1.png"
+          class="absolute inset-0 h-full w-full object-cover object-bottom lg:object-center"
+        />
+        <div
+          class="absolute inset-x-0 bottom-0 flex justify-center py-12 lg:p-12 backdrop-brightness-50 backdrop-blur-sm"
+        >
+          <div class="flex flex-col w-5/6 lg:w-3/5">
+            <h2 class="lg:max-w-2xl text-5xl font-bold tracking-tight">
+              Metaverse Content Creation
+            </h2>
+            <p class="lg:max-w-2xl mt-5 text-lg leading-8 text-gray-300">
+              Creating content for the metaverse is a new frontier. We're here
+              to bring a little bit of chaos to that landscape. One blend at a
+              time.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="watch" class="w-5/6 lg:w-2/4 flex flex-col items-center">
+        <div class="text-center">
+          <p class="text-base font-semibold leading-7 text-red-600">
+            You should
+          </p>
+          <h2 id="watch-now" class="text-4xl font-bold tracking-tight">
+            Watch Now
+          </h2>
+        </div>
+        <div
+          class="pt-4 w-full flex flex-row justify-center items-center divide-x divide-slate-700"
+        >
+          <div class="w-full text-center flex flex-col items-center">
+            <h3 class="text-xl font-bold tracking-tight">Live</h3>
+            <p>Every Saturday and Thursday at 8pm ET</p>
+            <a href="https://www.twitch.tv/contactsplus" class="mt-4 w-12 h-12"
+              ><img src="/img/twitch_color.png" /></a
+            >
+          </div>
+          <div class="w-full text-center flex flex-col items-center">
+            <h3 class="text-xl font-bold tracking-tight">VODs</h3>
+            <p>Uploaded (eventually) after every stream</p>
+            <a
+              href="https://www.youtube.com/@contactsplus"
+              class="mt-4 w-12 h-12"><img src="/img/youtube.png" /></a
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        id="support"
+        class="w-4/5 lg:w-3/5 bg-gradient-to-br from-slate-900 to-red-600 rounded-lg border border-slate-700"
+      >
+        <div class="m-10">
+          <p class="text-base font-semibold leading-7 text-red-600">
+            You should
+          </p>
+          <h2 class="text-4xl font-bold tracking-tight">Support Us</h2>
+          <p class="mt-4 max-w-md">
+            We use donations to increase the production quality of our content
+            and award our staff for their hard work.
+          </p>
+          <p class="mt-4 max-w-md">
+            You can support us by donating to our Patreon, subscribing to our
+            Twitch channel, or just by being apart of the community!
+          </p>
+          <div class="flex flex-row justify-start items-center mt-8">
+            <a href="https://www.patreon.com/contactsplus" class="w-12 mr-4"
+              ><img src="/img/patreon.png" /></a
+            >
+            <a href="https://www.twitch.tv/contactsplus" class="w-12 mr-4"
+              ><img src="/img/twitch_white.png" /></a
+            >
+            <a href="https://discord.gg/zju2NzpnjF" class="w-12 mr-4"
+              ><img src="/img/discord.png" /></a
+            >
+            <a href="https://twitter.com/contacts_plus" class="w-12 mr-4"
+              ><img src="/img/twitter.png" /></a
+            >
+            <a href="https://cyberfurz.social/@contacts_plus" class="w-12 mr-4"
+              ><img src="/img/mastodon.png" /></a
+            >
+          </div>
+        </div>
+      </div>
+      <div id="team" class="w-5/6">
+        <div class="text-center">
+          <p class="text-base font-semibold leading-7 text-red-600">
+            You should
+          </p>
+          <h2 class="text-4xl font-bold tracking-tight">Meet the Crew</h2>
+        </div>
+        <div
+          class="flex flex-row flex-wrap justify-center items-center text-center gap-y-8 mt-10"
+        >
+          <div class="flex flex-col items-center w-48">
+            <img
+              src="/img/wolf.png"
+              class="w-32 h-32 rounded-full border-4 border-slate-700"
+            />
+            <h3 class="mt-4 text-xl font-bold tracking-tight">
+              Wolf_Seisenbacher
+            </h3>
+            <p class="mt-2 text-lg font-medium tracking-tight">
+              Creator &amp; Host
+            </p>
+            <div
+              class="flex flex-row justify-center items-center mt-4 space-x-3"
+            >
+              <a href="https://discord.com/users/125788463831318528" class="w-8"
+                ><img src="/img/discord.png" /></a
+              >
+            </div>
+          </div>
+          <div class="flex flex-col items-center w-48">
+            <img
+              src="/img/nootsponge.jpg"
+              class="w-32 h-32 rounded-full border-4 border-slate-700"
+            />
+            <h3 class="mt-4 text-xl font-bold tracking-tight">NootSponge</h3>
+            <p class="mt-2 text-lg font-medium tracking-tight">
+              Producer &amp; Director
+            </p>
+            <div
+              class="flex flex-row justify-center items-center mt-4 space-x-3"
+            >
+              <a href="https://discord.com/users/148680149548793856" class="w-8"
+                ><img src="/img/discord.png" /></a
+              >
+              <a href="https://twitter.com/renfloof" class="w-8"
+                ><img src="/img/twitter.png" /></a
+              >
+              <a href="https://nootsponge.com" class="w-8"
+                ><img src="/img/link-solid.png" /></a
+              >
+            </div>
+          </div>
+          <div class="flex flex-col items-center w-48">
+            <img
+              src="/img/glitch.png"
+              class="w-32 h-32 rounded-full border-4 border-slate-700"
+            />
+            <h3 class="mt-4 text-xl font-bold tracking-tight">GlitchFlux</h3>
+            <p class="mt-2 text-lg font-medium tracking-tight">
+              Writer &amp; Editor
+            </p>
+            <div
+              class="flex flex-row justify-center items-center mt-4 space-x-3"
+            >
+              <a href="https://discord.com/users/240615441624596481" class="w-8"
+                ><img src="/img/discord.png" /></a
+              >
+              <a href="https://linktr.ee/glitchflux" class="w-8"
+                ><img src="/img/link-solid.png" /></a
+              >
+            </div>
+          </div>
+          <div class="flex flex-col items-center w-48">
+            <img
+              src="/img/matorin.png"
+              class="w-32 h-32 rounded-full border-4 border-slate-700"
+            />
+            <h3 class="mt-4 text-xl font-bold tracking-tight">Matorin</h3>
+            <p class="mt-2 text-lg font-medium tracking-tight">
+              Co-host &amp; Editor
+            </p>
+            <div
+              class="flex flex-row justify-center items-center mt-4 space-x-3"
+            >
+              <a href="https://discord.com/users/227213301229027328" class="w-8"
+                ><img src="/img/discord.png" /></a
+              >
+            </div>
+          </div>
+          <div class="flex flex-col items-center w-48">
+            <img
+              src="/img/raspberry.png"
+              class="w-32 h-32 rounded-full border-4 border-slate-700"
+            />
+            <h3 class="mt-4 text-xl font-bold tracking-tight">
+              RaspberryKitty1
+            </h3>
+            <p class="mt-2 text-lg font-medium tracking-tight">
+              Socials &amp; Chat Mod
+            </p>
+            <div
+              class="flex flex-row justify-center items-center mt-4 space-x-3"
+            >
+              <a href="https://discord.com/users/341822915957751820" class="w-8"
+                ><img src="/img/discord.png" /></a
+              >
+              <a href="https://twitter.com/raspberrykitty1" class="w-8"
+                ><img src="/img/twitter.png" /></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </artcle>
   </main>
 </BaseLayout>
