@@ -1,0 +1,42 @@
+name: Deploy to Cloudflare Pages
+on: [push]
+jobs:
+  build:
+    runs-on: docker
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js 19
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19
+      - name: Install dependencies
+        run: npm install
+      - name: Build site
+        run: npm run build
+      - name: Tar build artifacts
+        run: tar -czvf dist.tar.gz dist
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: site-build
+          path: dist.tar.gz
+
+  deploy:
+    needs: build
+    runs-on: docker
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: site-build
+      - name: Untar build artifacts
+        run: tar -xvf site-build/dist.tar.gz
+      - name: Deploy to Cloudflare Pages
+        uses: https://github.com/cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name contactsplus-web --branch ${{ github.ref_name }} --commit-hash ${{ github.sha }} --commit-dirty=true
