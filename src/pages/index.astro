@@ -19,34 +19,58 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       watchNow.innerText = "Touch the cow, do it now";
     }
   });
+
+  const tagline: HTMLElement = document.getElementById("tagline")!;
+
+  // choose random quote
+  const list = [
+    "Bet'cha we can talk about poop more than you.",
+    "Those special ED teachers were right.",
+    "Apes together, podcasters.",
+    "Two dogs, a bird, angry Jell-O, and an Italian.",
+    "An existential crisis away from becoming a boyband.",
+    "A pack of hotdogs made of forgetfulness.",
+    "Four-and-a-half men, you decide what we mean by that.",
+    "An ever growing debt of saltines.",
+    "What happens when rural americans get a little too close to becoming K-pop idols.",
+    "We're proud of you, sondaughter.",
+    "Can't spell Entertainment without eeatinmetr.",
+    "We can tell if they're lying by their taste.",
+    "VR personalities that probably should stay there.",
+    "After annoying Noot seven times, your next pizza is FREE.",
+  ];
+
+  tagline.innerText = list[Math.floor(Math.random() * list.length)];
 </script>
 
-<BaseLayout title="Contacts Plus - Metaverse Content">
+<BaseLayout title="Contacts Plus – Metaverse Content">
   <main class="flex flex-col items-center w-full min-h-content">
     <artcle class="w-full flex space-y-10 last:mb-10 flex-col items-center">
-      <div class="relative isolate bg-black w-full h-[37rem] overflow-hidden">
+      <div
+        class="relative isolate w-full h-[30rem] overflow-hidden flex justify-center"
+      >
         <img
-          src="/img/hero-image-1.png"
-          class="absolute inset-0 h-full w-full object-cover object-bottom lg:object-center"
+          class="absolute inset-0 h-full w-full object-cover object-center brightness-50"
+          src="/img/pexels-rbrigant44-771881.png"
         />
         <div
-          class="absolute inset-x-0 bottom-0 flex justify-center py-12 lg:p-12 backdrop-brightness-50 backdrop-blur-sm"
+          class="w-3/4 inset-y-8 absolute flex flex-row space-x-10 items-center justify-center"
         >
-          <div class="flex flex-col w-5/6 lg:w-3/5">
-            <h2 class="lg:max-w-2xl text-5xl font-bold tracking-tight">
-              Metaverse Content Creation
-            </h2>
-            <p class="lg:max-w-2xl mt-5 text-lg leading-8 text-gray-300">
-              Creating content for the metaverse is a new frontier. We're here
-              to bring a little bit of chaos to that landscape. One blend at a
-              time.
+          <img class="w-80" src="/img/wolf-rgb.png" />
+          <div class="w-1/2">
+            <h1 class="text-7xl font-bold tracking-tight">
+              Content straight from the metaverse.
+            </h1>
+            <p class="mt-5 text-lg leading-8" id="tagline">
+              An existential crisis away from becoming a boyband.
             </p>
           </div>
         </div>
       </div>
+
       <div id="watch" class="w-5/6 lg:w-2/4 flex flex-col items-center">
         <div class="text-center">
-          <p class="text-base font-semibold leading-7 text-red-600">
+          <p class="text-base font-semibold leading-7 text-blue-600">
             You should
           </p>
           <h2 id="watch-now" class="text-4xl font-bold tracking-tight">
@@ -54,37 +78,47 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           </h2>
         </div>
         <div
-          class="pt-4 w-full flex flex-row justify-center items-center divide-x divide-slate-700"
+          class="pt-4 w-full flex flex-row justify-center items-center space-x-3"
         >
-          <div class="w-full text-center flex flex-col items-center">
+          <div
+            class="p-5 w-1/3 text-center flex flex-col self-stretch items-center rounded bg-slate-900 border border-slate-700"
+          >
             <h3 class="text-xl font-bold tracking-tight">Live</h3>
             <p>Every Saturday and Thursday at 8pm ET</p>
             <a href="https://www.twitch.tv/contactsplus" class="mt-4 w-12 h-12"
               ><img src="/img/twitch_color.png" /></a
             >
           </div>
-          <div class="w-full text-center flex flex-col items-center">
-            <h3 class="text-xl font-bold tracking-tight">VODs</h3>
-            <p>Uploaded (eventually) after every stream</p>
+          <div
+            class="p-5 w-1/3 text-center flex flex-col self-stretch items-center rounded bg-slate-900 border border-slate-700"
+          >
+            <h3 class="text-xl font-bold tracking-tight">Video on Demand</h3>
+            <p>Full episode list available here</p>
+            <p class="text-sm text-slate-600">
+              (it might take some time for us to keep it up-to-date)
+            </p>
             <a
-              href="https://www.youtube.com/@contactsplus"
-              class="mt-4 w-12 h-12"><img src="/img/youtube.png" /></a
+              class="rounded mt-4 p-2 bg-blue-600 font-bold uppercase hover:bg-blue-800 transition-colors border border-slate-700"
+              href="/archive">Browse</a
             >
           </div>
         </div>
       </div>
       <div
         id="support"
-        class="w-4/5 lg:w-3/5 bg-gradient-to-br from-slate-900 to-red-600 rounded-lg border border-slate-700"
+        class="w-4/5 lg:w-3/5 bg-gradient-to-br from-[#020617] to-blue-600 rounded-lg border border-slate-700"
       >
         <div class="m-10">
-          <p class="text-base font-semibold leading-7 text-red-600">
+          <p class="text-base font-semibold leading-7 text-blue-600">
             You should
           </p>
           <h2 class="text-4xl font-bold tracking-tight">Support Us</h2>
           <p class="mt-4 max-w-md">
             We use donations to increase the production quality of our content
-            and award our staff for their hard work.
+            and award our staff for their hard work. Like <a
+              href="updateme"
+              class="underline">this</a
+            >.
           </p>
           <p class="mt-4 max-w-md">
             You can support us by donating to our Patreon, subscribing to our
@@ -103,15 +137,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <a href="https://twitter.com/contacts_plus" class="w-12 mr-4"
               ><img src="/img/twitter.png" /></a
             >
-            <a href="https://cyberfurz.social/@contacts_plus" rel="me" class="w-12 mr-4"
-              ><img src="/img/mastodon.png" /></a
+            <a
+              href="https://cyberfurz.social/@contacts_plus"
+              rel="me"
+              class="w-12 mr-4"><img src="/img/mastodon.png" /></a
             >
           </div>
         </div>
       </div>
       <div id="team" class="w-5/6">
         <div class="text-center">
-          <p class="text-base font-semibold leading-7 text-red-600">
+          <p class="text-base font-semibold leading-7 text-blue-600">
             You should
           </p>
           <h2 class="text-4xl font-bold tracking-tight">Meet the Crew</h2>

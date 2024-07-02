@@ -2,7 +2,7 @@
 import HeaderLinks from "./HeaderLinks.astro";
 ---
 
-<script>
+<!-- <script>
   const header = document.getElementById("header")!;
 
   window.addEventListener("scroll", function () {
@@ -14,8 +14,7 @@ import HeaderLinks from "./HeaderLinks.astro";
       header.classList.remove("bg-red-800");
     }
   });
-</script>
-
+</script> -->
 <script is:inline>
   function toggleMobileMenu() {
     const mobileMenu = document.getElementById("mobile-menu");
@@ -25,10 +24,11 @@ import HeaderLinks from "./HeaderLinks.astro";
 
 <header
   id="header"
-  class="sticky top-0 z-10 h-16 bg-slate-900 border-b border-slate-600 shadow-lg flex justify-center items-center transition-all w-screen overflow-x-clip"
+  class="h-16 bg-[#daa520] border-slate-600 text-slate-950 flex justify-center items-center transition-all w-screen overflow-x-clip"
 >
   <div class="w-4/5 md:w-3/5 flex flex-row justify-between sm:justify-start">
-    <a href="/"><img src="/img/contactsplus_white.png" class="h-10 w-auto" /></a
+    <a href="/"
+      ><img src="/img/c+ studios wordmark trans.png" class="h-10 w-auto" /></a
     >
     <nav
       class="hidden font-semibold ml-10 sm:flex flex-row items-center space-x-5"
