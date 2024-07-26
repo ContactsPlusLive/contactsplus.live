@@ -19,6 +19,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: contactsplus-com
+          projectName: contactsplus-web
           directory: dist
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
