@@ -3,15 +3,56 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout title="Contacts Plus – Watch">
-  <main
-    class="mb-8 mt-28 flex w-full flex-col items-center justify-center gap-2 px-8 md:px-24"
-  >
-    <h1 class="w-full text-5xl font-bold tracking-tight">Watch</h1>
-    <h2 class="w-full text-2xl">This page is in progress!</h2>
-    <p class="w-full">
-      This page will list a bunch of ways to watch our podcast, live and the
-      recordings. It will be an entrypoint to viewing our vast archive of
-      episodes from the last 4 seasons.
-    </p>
+  <main class="mt-20 flex w-full flex-col">
+    <hero class="relative h-[30em] w-full">
+      <img
+        class="h-[30em] w-full overflow-hidden object-cover"
+        src="/img/glitch_goofy.jpg"
+      />
+      <div
+        class="absolute bottom-0 w-full px-4 py-6 backdrop-blur-sm backdrop-brightness-50 md:px-24"
+      >
+        <h1 class="text-5xl font-bold tracking-tight text-white md:text-7xl">
+          Watch
+        </h1>
+        <p class="max-w-[50em] leading-relaxed text-white">
+          Dive into the world of late-night live talk shows with Contacts Plus.
+          Tune in live or watch past episodes on YouTube for endless
+          entertainment.
+        </p>
+      </div>
+    </hero>
+    <section id="twitch" class="flex flex-col items-center justify-center">
+      <div
+        class="my-12 flex w-1/2 flex-row items-center justify-center gap-8 rounded-lg border border-slate-700 bg-gradient-to-tr from-slate-950/0 to-purple-900 p-6"
+      >
+        <div class="flex flex-col items-center">
+          <h2 class="text-center text-4xl font-bold tracking-tight">
+            Live on Twitch
+          </h2>
+          <p class="mt-4 max-w-[50em] text-center">
+            Join us live on Twitch every Thursday, Friday, and Saturday at 8pm
+            ET. We'll be chatting with guests, playing games, and being chaotic.
+          </p>
+          <div
+            class="mb-5 mt-8 transition-all hover:-translate-x-1 hover:-translate-y-1"
+          >
+            <a
+              class="border-4 border-white bg-purple-900 p-3 text-lg font-bold outline-none transition-all duration-100 hover:shadow-[4px_4px_white]"
+              href="https://twitch.tv/contactsplus">Watch LIVE</a
+            >
+          </div>
+        </div>
+        <div>
+          <a href="https://twitch.tv/contactsplus">
+            <img
+              class="h-48 w-48 rounded-lg"
+              src="/img/twitch_color.png"
+              alt="Twitch Logo"
+            />
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 </BaseLayout>
