@@ -9,7 +9,7 @@ const episodes = await getCollection("episodes");
 const latestEpisodes = episodes
   .sort(
     (a, b) =>
-      new Date(b.data.airDate).getTime() - new Date(a.data.airDate).getTime()
+      new Date(b.data.airDate).getTime() - new Date(a.data.airDate).getTime(),
   )
   .slice(0, 3);
 ---
@@ -56,21 +56,21 @@ const latestEpisodes = episodes
 </script>
 
 <BaseLayout title="Contacts Plus – Metaverse Content">
-  <main class="flex flex-col items-center w-full min-h-content mt-20">
-    <artcle class="w-full flex space-y-10 last:mb-10 flex-col items-center">
+  <main class="min-h-content mt-20 flex w-full flex-col items-center">
+    <artcle class="flex w-full flex-col items-center space-y-10 last:mb-10">
       <div
-        class="relative isolate w-full h-[30rem] overflow-hidden flex justify-center"
+        class="relative isolate flex h-[30rem] w-full justify-center overflow-hidden"
       >
         <img
           class="absolute inset-0 h-full w-full object-cover object-center brightness-50"
           src="/img/pexels-rbrigant44-771881.png"
         />
         <div
-          class="w-3/4 inset-y-8 absolute flex flex-row space-x-10 items-center justify-center"
+          class="absolute inset-y-8 flex w-3/4 flex-row items-center justify-center space-x-10"
         >
-          <img class="w-80 hidden md:block" src="/img/wolf-rgb.png" />
+          <img class="hidden w-80 md:block" src="/img/wolf-rgb.png" />
           <div class="w-full md:w-1/2">
-            <h1 class="text-6xl md:text-7xl font-bold tracking-tight">
+            <h1 class="text-6xl font-bold tracking-tight md:text-7xl">
               Content straight from the metaverse.
             </h1>
             <p class="mt-5 text-lg leading-8" id="tagline">
@@ -80,7 +80,7 @@ const latestEpisodes = episodes
         </div>
       </div>
 
-      <div id="watch" class="w-5/6 lg:w-1/2 flex flex-col items-center">
+      <div id="watch" class="flex w-5/6 flex-col items-center lg:w-1/2">
         <div class="text-center">
           <p class="text-base font-semibold leading-7 text-blue-600">
             You should
@@ -90,19 +90,19 @@ const latestEpisodes = episodes
           </h2>
         </div>
         <div
-          class="pt-4 w-full flex flex-row justify-center items-center flex-wrap gap-3"
+          class="flex w-full flex-row flex-wrap items-center justify-center gap-3 pt-4"
         >
           <div
-            class="p-5 w-full sm:w-1/3 text-center flex flex-col self-stretch items-center rounded bg-slate-900 border border-slate-700"
+            class="flex w-full flex-col items-center self-stretch rounded border border-slate-700 bg-slate-900 p-5 text-center sm:w-1/3"
           >
             <h3 class="text-xl font-bold tracking-tight">Live</h3>
             <p>Every Saturday and Thursday at 8pm ET</p>
-            <a href="https://www.twitch.tv/contactsplus" class="mt-4 w-12 h-12"
+            <a href="https://www.twitch.tv/contactsplus" class="mt-4 h-12 w-12"
               ><img src="/img/twitch_color.png" /></a
             >
           </div>
           <div
-            class="p-5 w-full sm:w-1/3 text-center flex flex-col self-stretch items-center rounded bg-slate-900 border border-slate-700"
+            class="flex w-full flex-col items-center self-stretch rounded border border-slate-700 bg-slate-900 p-5 text-center sm:w-1/3"
           >
             <h3 class="text-xl font-bold tracking-tight">Video on Demand</h3>
             <p>Full episode list available</p>
@@ -110,30 +110,30 @@ const latestEpisodes = episodes
               (it might take some time for us to keep it up-to-date)
             </p>
             <a
-              class="rounded mt-4 p-2 bg-blue-600 font-bold hover:bg-blue-800 transition-colors border border-slate-700"
-              href="/episodes">Watch</a
+              class="mt-4 rounded border border-slate-700 bg-blue-600 p-2 font-bold transition-colors hover:bg-blue-800"
+              href="/watch">Watch</a
             >
           </div>
         </div>
 
-        <div class="mt-10 w-full flex flex-col items-center">
+        <div class="mt-10 flex w-full flex-col items-center">
           <h2 class="text-3xl font-bold tracking-tight">Latest Episodes</h2>
           <div
-            class="flex flex-row justify-center items-stretch flex-wrap gap-4 mt-5 w-full"
+            class="mt-5 flex w-full flex-row flex-wrap items-stretch justify-center gap-4"
           >
             {
               latestEpisodes.map((episode) => (
-                <div class="w-full sm:w-72 flex flex-col rounded-lg border border-slate-700 hover:bg-slate-800 transition">
+                <div class="flex w-full flex-col rounded-lg border border-slate-700 transition hover:bg-slate-800 sm:w-72">
                   <a href={"/episodes/" + episode.id}>
                     <img
-                      class="w-full h-auto rounded-t-lg"
+                      class="h-auto w-full rounded-t-lg"
                       src={
                         "https://i.ytimg.com/vi/" +
                         episode.data.ytID +
                         "/maxresdefault.jpg"
                       }
                     />
-                    <div class="p-4 w-full">
+                    <div class="w-full p-4">
                       <h3 class="text-xl font-bold">
                         S{episode.data.season} E{episode.data.episode}
                       </h3>
@@ -151,7 +151,7 @@ const latestEpisodes = episodes
       </div>
       <div
         id="support"
-        class="w-4/5 lg:w-3/5 bg-gradient-to-br from-[#020617] to-blue-600 rounded-lg border border-slate-700"
+        class="w-4/5 rounded-lg border border-slate-700 bg-gradient-to-br from-[#020617] to-blue-600 lg:w-3/5"
       >
         <div class="m-10">
           <p class="text-base font-semibold leading-7 text-blue-600">
@@ -169,23 +169,23 @@ const latestEpisodes = episodes
             You can support us by donating to our Patreon, subscribing to our
             Twitch channel, or just by being apart of the community!
           </p>
-          <div class="flex flex-row justify-start items-center mt-8">
-            <a href="https://www.patreon.com/contactsplus" class="w-12 mr-4"
+          <div class="mt-8 flex flex-row items-center justify-start">
+            <a href="https://www.patreon.com/contactsplus" class="mr-4 w-12"
               ><img src="/img/patreon.png" /></a
             >
-            <a href="https://www.twitch.tv/contactsplus" class="w-12 mr-4"
+            <a href="https://www.twitch.tv/contactsplus" class="mr-4 w-12"
               ><img src="/img/twitch_white.png" /></a
             >
-            <a href="https://youtube.com/@contactsplus" class="w-12 mr-4"
+            <a href="https://youtube.com/@contactsplus" class="mr-4 w-12"
               ><img src="/img/youtube_white.png" /></a
             >
-            <a href="https://discord.gg/zju2NzpnjF" class="w-12 mr-4"
+            <a href="https://discord.gg/zju2NzpnjF" class="mr-4 w-12"
               ><img src="/img/discord.png" /></a
             >
             <a
               href="https://cyberfurz.social/@contacts_plus"
               rel="me"
-              class="w-12 mr-4"><img src="/img/fediverse.png" /></a
+              class="mr-4 w-12"><img src="/img/fediverse.png" /></a
             >
           </div>
         </div>
@@ -198,14 +198,14 @@ const latestEpisodes = episodes
           <h2 class="text-4xl font-bold tracking-tight">Meet the Crew</h2>
         </div>
         <div
-          class="flex flex-row flex-wrap justify-center items-stretch text-center gap-8 mt-10"
+          class="mt-10 flex flex-row flex-wrap items-stretch justify-center gap-8 text-center"
         >
           <div
-            class="flex flex-col items-center border-slate-700 border rounded-lg bg-slate-900 p-4 w-60 md:w-48"
+            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
           >
             <img
               src="/img/wolf.jpg"
-              class="w-32 h-32 object-cover rounded-full"
+              class="h-32 w-32 rounded-full object-cover"
             />
             <h3 class="mt-4 text-xl font-bold tracking-tight">
               Wolf Seisenbacher
@@ -214,7 +214,7 @@ const latestEpisodes = episodes
               Creator &amp; Host
             </p>
             <div
-              class="flex flex-row justify-center items-center mt-4 space-x-3"
+              class="mt-4 flex flex-row items-center justify-center space-x-3"
             >
               <a href="https://discord.com/users/125788463831318528" class="w-8"
                 ><img src="/img/discord.png" /></a
@@ -222,16 +222,16 @@ const latestEpisodes = episodes
             </div>
           </div>
           <div
-            class="flex flex-col items-center border-slate-700 border rounded-lg bg-slate-900 p-4 w-60 md:w-48"
+            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
           >
             <img
               src="/img/nootsponge.jpg"
-              class="w-32 h-32 object-cover rounded-full"
+              class="h-32 w-32 rounded-full object-cover"
             />
             <h3 class="mt-4 text-xl font-bold tracking-tight">NootSponge</h3>
             <p class="mt-2 text-lg font-medium tracking-tight">Producer</p>
             <div
-              class="flex flex-row justify-center items-center mt-4 space-x-3"
+              class="mt-4 flex flex-row items-center justify-center space-x-3"
             >
               <a href="https://discord.com/users/148680149548793856" class="w-8"
                 ><img src="/img/discord.png" /></a
@@ -245,18 +245,18 @@ const latestEpisodes = episodes
             </div>
           </div>
           <div
-            class="flex flex-col items-center border-slate-700 border rounded-lg bg-slate-900 p-4 w-60 md:w-48"
+            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
           >
             <img
               src="/img/glitch.jpg"
-              class="w-32 h-32 object-cover rounded-full"
+              class="h-32 w-32 rounded-full object-cover"
             />
             <h3 class="mt-4 text-xl font-bold tracking-tight">GlitchFlux</h3>
             <p class="mt-2 text-lg font-medium tracking-tight">
               Production Design
             </p>
             <div
-              class="flex flex-row justify-center items-center mt-4 space-x-3"
+              class="mt-4 flex flex-row items-center justify-center space-x-3"
             >
               <a href="https://discord.com/users/240615441624596481" class="w-8"
                 ><img src="/img/discord.png" /></a
@@ -267,16 +267,16 @@ const latestEpisodes = episodes
             </div>
           </div>
           <div
-            class="flex flex-col items-center border-slate-700 border rounded-lg bg-slate-900 p-4 w-60 md:w-48"
+            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
           >
             <img
               src="/img/matorin.jpg"
-              class="w-32 h-32 object-cover rounded-full"
+              class="h-32 w-32 rounded-full object-cover"
             />
             <h3 class="mt-4 text-xl font-bold tracking-tight">Matorin</h3>
             <p class="mt-2 text-lg font-medium tracking-tight">Co-host</p>
             <div
-              class="flex flex-row justify-center items-center mt-4 space-x-3"
+              class="mt-4 flex flex-row items-center justify-center space-x-3"
             >
               <a href="https://discord.com/users/227213301229027328" class="w-8"
                 ><img src="/img/discord.png" /></a
@@ -284,11 +284,11 @@ const latestEpisodes = episodes
             </div>
           </div>
           <div
-            class="flex flex-col items-center border-slate-700 border rounded-lg bg-slate-900 p-4 w-60 md:w-48"
+            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
           >
             <img
               src="/img/raspberry.png"
-              class="w-32 h-32 bg-slate-500 rounded-full"
+              class="h-32 w-32 rounded-full bg-slate-500"
             />
             <h3 class="mt-4 text-xl font-bold tracking-tight">
               RaspberryKitty1
@@ -297,7 +297,7 @@ const latestEpisodes = episodes
               Socials &amp; Backend
             </p>
             <div
-              class="flex flex-row justify-center items-center mt-4 space-x-3"
+              class="mt-4 flex flex-row items-center justify-center space-x-3"
             >
               <a href="https://discord.com/users/341822915957751820" class="w-8"
                 ><img src="/img/discord.png" /></a
