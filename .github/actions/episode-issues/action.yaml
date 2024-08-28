@@ -1,0 +1,7 @@
+name: "Episode IssueOps"
+description: "Create and manage episodes from issues"
+inputs:
+  github_token:
+    description: The GitHub token used to create an authenticated client - Provided for you by default!
+    default: ${{ github.token }}
+    required: true
