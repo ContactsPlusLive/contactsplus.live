@@ -1,21 +1,26 @@
 import { z, defineCollection } from "astro:content";
 
-const FormatsEnum = z.enum([
-  "withWolf",
-  "onTheGo",
-  "whoseLine",
-  "special",
-  "community",
-  "gameNight",
-]);
-type FormatsEnum = z.infer<typeof FormatsEnum>;
-
 // add index signature to the dictionary
-interface CrewRolesDict {
+interface StringDictionary {
   [key: string]: string;
 }
 
-export const CrewRolesDict: CrewRolesDict = {
+export const FormatsDict: StringDictionary = {
+  withWolf: "with Wolf Seisenbacher",
+  onTheGo: "On the Go!",
+  whoseLine: "Whose Driving That Value??",
+  special: "Special",
+  community: "Community Night",
+  gameNight: "Game Night",
+};
+
+const FormatsEnum = z.enum([...Object.keys(FormatsDict)] as [
+  string,
+  ...string[],
+]);
+type FormatsEnum = z.infer<typeof FormatsEnum>;
+
+export const CrewRolesDict: StringDictionary = {
   host: "Host",
   cohost: "Co-host",
   cameraSwitcher: "Camera Switcher",
@@ -26,7 +31,7 @@ export const CrewRolesDict: CrewRolesDict = {
 
 const CrewRoleEnum = z.enum([...Object.keys(CrewRolesDict)] as [
   string,
-  ...string[]
+  ...string[],
 ]);
 type CrewRoleEnum = z.infer<typeof CrewRoleEnum>;
 
@@ -38,7 +43,7 @@ const episodeCollection = defineCollection({
     title: z.string(),
     description: z.string(),
     format: FormatsEnum,
-    airDate: z.string().date(),
+    airDate: z.date(),
     duration: z.string().time(),
     ytID: z.string(),
     tags: z.array(z.string()),
@@ -46,9 +51,9 @@ const episodeCollection = defineCollection({
       z.object({
         name: z.string(),
         role: CrewRoleEnum.or(z.array(CrewRoleEnum)),
-      })
+      }),
     ),
-    guests: z.array(z.string()),
+    guests: z.array(z.string()).optional(),
   }),
 });
 
@@ -64,7 +69,7 @@ export const getCrewRoles = (roles: string | string[]): string => {
   return CrewRolesDict[roles];
 };
 
-export const getNiceDate = (date: string): string => {
+export const getNiceDate = (date: string | Date): string => {
   return new Date(date).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",

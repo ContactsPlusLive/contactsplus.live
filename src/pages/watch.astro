@@ -1,9 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+
+import { getNiceDate } from "../content/config";
+
+const episodes = await getCollection("episodes");
+const sortedEpisodes = episodes.sort((a, b) => {
+  const aDate = new Date(a.data.airDate);
+  const bDate = new Date(b.data.airDate);
+  return aDate > bDate ? -1 : 1;
+});
 ---
 
 <BaseLayout title="Contacts Plus – Watch">
-  <main class="mt-20 flex w-full flex-col">
+  <main class="mt-20 flex w-full flex-col items-center">
     <hero class="relative h-[30em] w-full">
       <img
         class="h-[30em] w-full overflow-hidden object-cover"
@@ -22,9 +33,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </p>
       </div>
     </hero>
-    <section id="twitch" class="flex flex-col items-center justify-center">
+    <section
+      id="twitch"
+      class="flex w-full flex-col items-center justify-center"
+    >
       <div
-        class="my-12 flex w-1/2 flex-row items-center justify-center gap-8 rounded-lg border border-slate-700 bg-gradient-to-tr from-slate-950/0 to-purple-900 p-6"
+        class="my-12 flex w-11/12 flex-row items-center justify-center gap-8 rounded-lg border border-slate-700 bg-gradient-to-tr from-slate-950/0 to-purple-900 p-6 md:w-1/2"
       >
         <div class="flex flex-col items-center">
           <h2 class="text-center text-4xl font-bold tracking-tight">
@@ -38,19 +52,118 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             class="mb-5 mt-8 transition-all hover:-translate-x-1 hover:-translate-y-1"
           >
             <a
-              class="border-4 border-white bg-purple-900 p-3 text-lg font-bold outline-none transition-all duration-100 hover:shadow-[4px_4px_white]"
+              class="border-2 border-white bg-purple-900 p-3 text-lg font-bold outline-none transition-all duration-100 hover:shadow-[4px_4px_white]"
               href="https://twitch.tv/contactsplus">Watch LIVE</a
             >
           </div>
         </div>
-        <div>
+        <div class="hidden md:block">
           <a href="https://twitch.tv/contactsplus">
             <img
-              class="h-48 w-48 rounded-lg"
+              class="h-auto w-48 rounded-lg"
               src="/img/twitch_color.png"
               alt="Twitch Logo"
             />
           </a>
+        </div>
+      </div>
+    </section>
+    <hr class="mb-8 w-72 border-t-2 border-slate-700" />
+    <section id="browse" class="w-full px-4 md:px-24">
+      <h2 class="mb-8 text-center text-5xl font-bold tracking-tight">
+        Browse the <span
+          class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          >ARCHIVE</span
+        >
+      </h2>
+      <div
+        class="mb-8 flex flex-row flex-wrap items-stretch justify-center gap-2"
+      >
+        <a
+          href="/formats"
+          class="relative h-[10em] w-full overflow-hidden rounded-lg border border-slate-700 transition hover:brightness-110 md:w-1/5"
+        >
+          <img
+            class="h-full w-full object-cover object-bottom"
+            src="/img/angynoot.jpg"
+          />
+          <div
+            class="absolute inset-0 w-full px-4 py-6 backdrop-blur-sm backdrop-brightness-75"
+          >
+            <h3 class="text-2xl font-bold">Formats</h3>
+            <p>
+              Explore the different segments and games we play on Contacts Plus.
+            </p>
+          </div>
+        </a>
+        <a
+          href="/seasons"
+          class="relative h-[10em] w-full overflow-hidden rounded-lg border border-slate-700 transition hover:brightness-110 md:w-1/5"
+        >
+          <img
+            class="h-full w-full object-cover"
+            src="/img/woolsoxenbacher.jpg"
+          />
+          <div
+            class="absolute inset-0 w-full px-4 py-6 backdrop-blur-sm backdrop-brightness-75"
+          >
+            <h3 class="text-2xl font-bold">Seasons</h3>
+            <p>Browse through each season of Contacts Plus.</p>
+          </div>
+        </a>
+        <a
+          href="/episodes"
+          class="relative h-[10em] w-full overflow-hidden rounded-lg border border-slate-700 transition hover:brightness-110 md:w-1/5"
+        >
+          <img
+            class="h-full w-full object-cover"
+            src="/img/petorglitchin.jpg"
+          />
+          <div
+            class="absolute inset-0 w-full px-4 py-6 backdrop-blur-sm backdrop-brightness-75"
+          >
+            <h3 class="text-2xl font-bold">Latest</h3>
+            <p>
+              Watch the latest episodes of Contacts Plus and catch up on what
+              you missed.
+            </p>
+          </div>
+        </a>
+      </div>
+    </section>
+    <hr class="mb-8 w-72 border-t-2 border-slate-700" />
+    <section id="episodes" class="mb-12">
+      <div
+        class="flex w-full flex-col items-center justify-center gap-4 px-4 md:px-24"
+      >
+        <h2 class="text-5xl font-bold tracking-tight">Episodes</h2>
+        <p class="max-w-[50em] text-center">
+          Watch the latest episodes of Contacts Plus and catch up on what you
+          missed.
+        </p>
+        <div class="my-3 flex flex-row flex-wrap justify-center gap-4">
+          {
+            sortedEpisodes.map((otherEpisode) => (
+              <div class="w-full md:w-80">
+                <a href={`/episodes/${otherEpisode.id}`}>
+                  <img
+                    class="aspect-video h-auto w-full object-cover transition-all hover:brightness-75 md:w-80"
+                    src={`https://i.ytimg.com/vi/${otherEpisode.data.ytID}/maxresdefault.jpg`}
+                  />
+                  <div class="mt-2 flex flex-row gap-3 text-sm font-light">
+                    {/* prettier-ignore */}
+                    <span class="font-semibold">
+                      S{otherEpisode.data.season} E{otherEpisode.data.episode}
+                    </span>
+                    <span class="text-slate-400">
+                      {getNiceDate(otherEpisode.data.airDate)}
+                    </span>
+                  </div>
+                  <span class="leading-tight">{otherEpisode.data.title}</span>
+                </a>
+              </div>
+            ))
+          }
         </div>
       </div>
     </section>

@@ -1,0 +1,98 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { getCollection } from "astro:content";
+
+const episodes = await getCollection("episodes");
+const sortedEpisodes = episodes.sort((a, b) => {
+  const aDate = new Date(a.data.airDate);
+  const bDate = new Date(b.data.airDate);
+  return aDate > bDate ? -1 : 1;
+});
+---
+
+<BaseLayout title="Contacts Plus – Episodes">
+  <main class="mb-12 mt-20 flex w-full flex-col items-center">
+    <hero class="relative h-[30em] w-full">
+      <img
+        class="h-[30em] w-full overflow-hidden object-cover object-[center_15%]"
+        src="/img/petorglitchin.jpg"
+      />
+      <div
+        class="absolute bottom-0 w-full px-4 py-6 backdrop-blur-sm backdrop-brightness-50 md:px-24"
+      >
+        <h1
+          class="pb-2 text-5xl font-bold tracking-tight text-white md:text-7xl"
+        >
+          Episodes
+        </h1>
+        <p class="max-w-[50em] leading-relaxed text-white">
+          Browse the latest episodes of Contacts Plus.
+        </p>
+      </div>
+    </hero>
+    <section
+      id="twitch"
+      class="flex w-full flex-col items-center justify-center"
+    >
+      <div
+        class="my-12 flex w-11/12 flex-row items-center justify-center gap-8 rounded-lg border border-slate-700 bg-gradient-to-tr from-slate-950/0 to-purple-900 p-6 md:w-1/2"
+      >
+        <div class="flex flex-col items-center">
+          <h2 class="text-center text-4xl font-bold tracking-tight">
+            Live on Twitch
+          </h2>
+          <p class="mt-4 max-w-[50em] text-center">
+            Join us live on Twitch every Thursday, Friday, and Saturday at 8pm
+            ET. We'll be chatting with guests, playing games, and being chaotic.
+          </p>
+          <div
+            class="mb-5 mt-8 transition-all hover:-translate-x-1 hover:-translate-y-1"
+          >
+            <a
+              class="border-2 border-white bg-purple-900 p-3 text-lg font-bold outline-none transition-all duration-100 hover:shadow-[4px_4px_white]"
+              href="https://twitch.tv/contactsplus">Watch LIVE</a
+            >
+          </div>
+        </div>
+        <div class="hidden md:block">
+          <a href="https://twitch.tv/contactsplus">
+            <img
+              class="h-auto w-48 rounded-lg"
+              src="/img/twitch_color.png"
+              alt="Twitch Logo"
+            />
+          </a>
+        </div>
+      </div>
+    </section>
+    <hr class="mb-8 w-72 border-t-2 border-slate-700" />
+    <section
+      id="browse"
+      class="flex w-full flex-col items-center px-4 md:px-24"
+    >
+      <h2 class="mb-4 text-center text-5xl font-bold tracking-tight">
+        Browse the <span
+          class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          >LATEST</span
+        >
+      </h2>
+      <p class="w-11/12 text-center md:w-1/3">
+        Currently a work in progress... for now have this list of all our recent
+        episodes! (that I've actually catalogged)
+      </p>
+      <ul class="w-11/12 list-outside list-disc md:w-1/4">
+        {
+          sortedEpisodes.map((episode) => (
+            <li>
+              <a href={`/episodes/${episode.id}`} class="hover:underline">
+                S{episode.data.season} E{episode.data.episode} -{" "}
+                {episode.data.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+</BaseLayout>
