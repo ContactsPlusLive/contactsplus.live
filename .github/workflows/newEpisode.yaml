@@ -1,0 +1,67 @@
+on:
+  workflow_dispatch:
+    inputs:
+      episodeNumber:
+        description: "Episode number"
+        required: true
+      episodeTitle:
+        description: "Episode title"
+        required: true
+        type: string
+      episodeDescription:
+        description: "Episode description"
+        required: true
+        type: string
+      episodeFormat:
+        description: "Episode format"
+        required: true
+        default: withWolf
+        type: choice
+        options:
+          - withWolf
+          - onTheGo
+          - whoseLine
+          - special
+          - community
+          - gameNight
+      episodeAirDate:
+        description: "Episode air date"
+        required: true
+        type: string
+      episodeDuration:
+        description: "Episode duration"
+        required: true
+        type: string
+      episodeYtID:
+        description: "YouTube video ID"
+        required: true
+        type: string
+      episodeTags:
+        description: "Episode tags"
+        required: true
+        type: string
+      episodeCrew:
+        description: "Episode crew"
+        required: true
+        type: string
+      episodeGuests:
+        description: "Episode guests"
+        required: true
+        type: string
+
+jobs:
+  print-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Episode number: ${{ inputs.episodeNumber }}"
+          echo "Episode title: ${{ inputs.episodeTitle }}"
+          echo "Episode description: ${{ inputs.episodeDescription }}"
+          echo "Episode format: ${{ inputs.episodeFormat }}"
+          echo "Episode air date: ${{ inputs.episodeAirDate }}"
+          echo "Episode duration: ${{ inputs.episodeDuration }}"
+          echo "YouTube video ID: ${{ inputs.episodeYtID }}"
+          echo "Episode tags: ${{ inputs.episodeTags }}"
+          echo "Episode crew: ${{ inputs.episodeCrew }}"
+          echo "Episode guests: ${{ inputs.episodeGuests }}"
