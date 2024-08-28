@@ -9,5 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+        working-directory: .github/actions/episode-issues
       - name: Run episode-issues
         uses: ./.github/actions/episode-issues
