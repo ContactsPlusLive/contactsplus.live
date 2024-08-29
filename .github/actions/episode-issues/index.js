@@ -11,6 +11,8 @@ import { context } from "@actions/github";
 
   const body = context.payload.issue.body.trim();
 
+  core.info(context);
+
   // this is about to be real ugly
 
   // detect command with regex
