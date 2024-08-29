@@ -11,13 +11,13 @@ const { owner, repo } = context.repo;
 const body = context.payload.issue.body.trim();
 
 // test case
-// const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/gm;
+const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/gm;
 
 // Alternative syntax using RegExp constructor
-const regex = new RegExp(
-  "\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n[\\s]*?```",
-  "gm",
-);
+// const regex = new RegExp(
+//   "\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n[\\s]*?```",
+//   "gm",
+// );
 
 const str = `14111awdawdawdadw
   .createEpisode
@@ -75,6 +75,8 @@ core.info(m);
 // detect command with regex
 // const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n```/gm;
 const matches = regex.test(body);
+
+core.info(body);
 
 core.info(matches);
 if (!matches) {
