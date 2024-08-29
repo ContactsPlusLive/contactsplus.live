@@ -28,4 +28,7 @@ jobs:
           message: "Update episodes content (issue #${{ github.event.issue.number }})"
           new_branch: "update-episodes-${{ github.event.issue.number }}"
   call-deploy:
+    permissions:
+      contents: read
+      deployments: write
     uses: ./.github/workflows/deploy.yaml
