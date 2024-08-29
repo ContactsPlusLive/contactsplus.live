@@ -47,6 +47,8 @@ awdawd`;
 core.info(body);
 core.info(str);
 
+core.info(body.localeCompare(str));
+
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
 
 core.info(JSON.stringify(body.match(regex)));
