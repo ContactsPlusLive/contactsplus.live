@@ -47,7 +47,7 @@ awdawd`;
 
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
 
-core.info(JSON.stringify(body.match(regex)));
+core.info(JSON.stringify(body.match(regex)[1]));
 
 // this is about to be real ugly
 // detect command with regex
