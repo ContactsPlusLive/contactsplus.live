@@ -5,6 +5,9 @@ inputs:
     description: The GitHub token used to create an authenticated client - Provided for you by default!
     default: ${{ github.token }}
     required: true
+outputs:
+  changed:
+    description: "Whether the content has changed"
 runs:
   using: "node20"
   main: "index.js"

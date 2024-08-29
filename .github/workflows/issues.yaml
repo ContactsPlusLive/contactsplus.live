@@ -14,3 +14,10 @@ jobs:
         working-directory: .github/actions/episode-issues
       - name: Run episode-issues
         uses: ./.github/actions/episode-issues
+      - name: Commit changes
+        if: steps.s3.outputs.changed == 'true'
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "src/content"
+          message: "Update episodes content (issue #${{ github.event.issue.number }})"
+          new_branch: "update-episodes-${{ github.event.issue.number }}"
