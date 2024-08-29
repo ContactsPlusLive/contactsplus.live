@@ -12,7 +12,7 @@ const body = context.payload.issue.body;
 core.info(body);
 
 // test case
-const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/gm;
+const regex = /\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n[\\s]*?```/gm;
 
 core.info(regex.exec(body));
 core.info(regex.exec(body));
