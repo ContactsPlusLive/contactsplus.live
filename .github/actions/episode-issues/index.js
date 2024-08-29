@@ -5,7 +5,6 @@ import { context } from "@actions/github";
 (async () => {
   const token = core.getInput("github_token", { required: true });
   const octokit = github.getOctokit(token);
-  core.info(JSON.stringify(context));
 
   const issue_number = context.payload.issue.number;
   const { owner, repo } = context.repo;
@@ -66,7 +65,7 @@ import { context } from "@actions/github";
     });
   }
 
-  core.info(m[0]);
+  core.info(m);
 
   // this is about to be real ugly
   // detect command with regex
