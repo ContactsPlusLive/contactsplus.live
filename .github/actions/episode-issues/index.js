@@ -12,9 +12,11 @@ const body = context.payload.issue.body;
 
 // test case
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/gm;
-const m = regex.exec(body);
 
-core.info(m);
+core.info(regex.exec(body));
+core.info(regex.exec(body));
+core.info(regex.exec(body));
+core.info(regex.exec(body));
 
 // this is about to be real ugly
 // detect command with regex
