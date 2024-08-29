@@ -8,7 +8,42 @@ const octokit = github.getOctokit(token);
 const issue_number = context.payload.issue.number;
 const { owner, repo } = context.repo;
 
-const body = context.payload.issue.body;
+// const body = context.payload.issue.body;
+const body = `
+awdawd
+.createEpisodeaw
+\`\`\`yaml
+---
+season: 4
+episode: 60
+title: Dementia, Pineapple on Pizza, and Headless Lounge Love??
+description: In this episode, some returning guests and our resident blue wolf play some old and brand new games around the classic "Whose Line Is It Anyway?" format.
+format: whoseLine
+airDate: 2024-05-25
+duration: "02:03:17"
+ytID: 1qqVYa4d9Wg
+tags:
+  - game show
+crew:
+  - name: Wolf Seisenbacher
+    role: host
+  - name: GlitchFlux
+    role: cohost
+  - name: NootSponge
+    role: producer
+  - name: Matorin Talfax
+    role: cameraSwitcher
+  - name: RaspberryKitty1
+    role: cohost
+guests:
+  - Defhammer
+  - Namogod
+  - SlyTheFloof
+  - Cloud_striker
+  - Cerealbowl
+  - Beethoven
+\`\`\`
+awdawd`;
 
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
 
