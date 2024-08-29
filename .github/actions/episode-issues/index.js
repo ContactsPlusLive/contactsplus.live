@@ -5,23 +5,19 @@ import { context } from "@actions/github";
 core.notice("Hello from episode-issues action!");
 
 async () => {
-  try {
-    const token = core.getInput("repo-token", { required: true });
-    const octokit = github.getOctokit(token);
+  const token = core.getInput("repo-token", { required: true });
+  const octokit = github.getOctokit(token);
 
-    const issue_number = context.payload.issue.number;
-    const { owner, repo } = context.repo;
+  const issue_number = context.payload.issue.number;
+  const { owner, repo } = context.repo;
 
-    const body = context.payload.comment.body.trim();
+  const body = context.payload.comment.body.trim();
 
-    // for debugging
-    core.info(`Issue number: ${issue_number}`);
-    core.info(`Owner: ${owner}`);
-    core.info(`Repo: ${repo}`);
-    core.info(`Comment body: ${body}`);
+  // for debugging
+  core.info(`Issue number: ${issue_number}`);
+  core.info(`Owner: ${owner}`);
+  core.info(`Repo: ${repo}`);
+  core.info(`Comment body: ${body}`);
 
-    core.info("Fuck off");
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+  core.info("Fuck off");
 };
