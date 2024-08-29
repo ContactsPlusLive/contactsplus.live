@@ -27,3 +27,5 @@ jobs:
           add: "src/content"
           message: "Update episodes content (issue #${{ github.event.issue.number }})"
           new_branch: "update-episodes-${{ github.event.issue.number }}"
+  call-deploy:
+    uses: ./.github/workflows/deploy.yaml
