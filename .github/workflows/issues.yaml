@@ -12,6 +12,5 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: .github/actions/episode-issues
-      - run: cat .github/actions/episode-issues/index.js
       - name: Run episode-issues
         uses: ./.github/actions/episode-issues

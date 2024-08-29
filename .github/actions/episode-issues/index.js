@@ -11,7 +11,7 @@ core.notice("Hello from episode-issues action!");
   const issue_number = context.payload.issue.number;
   const { owner, repo } = context.repo;
 
-  const body = context.payload.comment.body.trim();
+  const body = context.payload.issue.body.trim();
 
   // for debugging
   core.info(`Issue number: ${issue_number}`);
