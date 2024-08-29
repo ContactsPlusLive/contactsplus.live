@@ -39,12 +39,13 @@ import path from "path";
       fs.writeFileSync(contentPath, yaml);
 
       // reply to issue with success message
-      await octokit.issues.createComment({
+      await octokit.rest.issues.createComment({
         owner,
         repo,
         issue_number,
-        body: `✅ Recognized command, created episode '${identifier}'.`,
+        body: `🎉 Created episode '${identifier}'`,
       });
+
       core.setOutput("changed", true);
 
       core.notice("✅ Done creating episode");
