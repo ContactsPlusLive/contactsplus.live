@@ -12,79 +12,16 @@ const body = context.payload.issue.body.trim();
 
 // test case
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/gm;
-
-// Alternative syntax using RegExp constructor
-// const regex = new RegExp(
-//   "\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n[\\s]*?```",
-//   "gm",
-// );
-
-const str = `14111awdawdawdadw
-  .createEpisode
-  \`\`\`yaml
-  ---
-  season: 4
-  episode: 60
-  title: Dementia, Pineapple on Pizza, and Headless Lounge Love??
-  description: In this episode, some returning guests and our resident blue wolf play some old and brand new games around the classic "Whose Line Is It Anyway?" format.
-  format: whoseLine
-  airDate: 2024-05-25
-  duration: "02:03:17"
-  ytID: 1qqVYa4d9Wg
-  tags:
-    - game show
-  crew:
-    - name: Wolf Seisenbacher
-      role: host
-    - name: GlitchFlux
-      role: cohost
-    - name: NootSponge
-      role: producer
-    - name: Matorin Talfax
-      role: cameraSwitcher
-    - name: RaspberryKitty1
-      role: cohost
-  guests:
-    - Defhammer
-    - Namogod
-    - SlyTheFloof
-    - Cloud_striker
-    - Cerealbowl
-    - Beethoven
-  \`\`\`
-  `;
-let m;
-
-core.info(m);
-
-while ((m = regex.exec(str)) !== null) {
-  // This is necessary to avoid infinite loops with zero-width matches
-  if (m.index === regex.lastIndex) {
-    regex.lastIndex++;
-  }
-
-  // The result can be accessed through the `m`-variable.
-  m.forEach((match, groupIndex) => {
-    core.info(`Found match, group ${groupIndex}: ${match}`);
-  });
-}
+const m = regex.exec(body);
 
 core.info(m);
 
 // this is about to be real ugly
 // detect command with regex
 // const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n```/gm;
-const matches = regex.test(body);
+const matches = regex.exec(body);
 
 core.info(body);
-
-const str2 = "fee fi fo fum";
-const re = /\w+\s/g;
-
-core.info(re.exec(str2)); // ["fee ", index: 0, input: "fee fi fo fum"]
-core.info(re.exec(str2)); // ["fi ", index: 4, input: "fee fi fo fum"]
-core.info(re.exec(str2)); // ["fo ", index: 7, input: "fee fi fo fum"]
-core.info(re.exec(str2)); // null
 
 core.info(matches);
 if (!matches) {
