@@ -16,10 +16,11 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: .github/actions/episode-issues
-      - name: Run episode-issues
+      - id: episode-issues
+        name: Run episode-issues
         uses: ./.github/actions/episode-issues
       - name: Commit changes
-        if: ${{ steps.3.outputs.changed == 'true' }}
+        if: ${{ steps.episode-issues.outputs.changed == 'true' }}
         uses: EndBug/add-and-commit@v9
         with:
           add: "src/content"
