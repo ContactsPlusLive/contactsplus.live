@@ -15,10 +15,8 @@ import { context } from "@actions/github";
 
   // detect command with regex
   const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n```/gm;
-  const matches = body.match(regex);
+  const matches = regex.exec(body);
 
-  core.info(regex);
-  core.info(body);
   core.info(matches);
   if (!matches) {
     core.info("❌ No commands found in issue body, gettin' outta here");
