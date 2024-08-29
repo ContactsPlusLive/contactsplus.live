@@ -2,7 +2,7 @@ import core from "@actions/core";
 import github from "@actions/github";
 import { context } from "@actions/github";
 
-export async function run() {
+async () => {
   try {
     const token = core.getInput("repo-token", { required: true });
     const octokit = github.getOctokit(token);
@@ -22,4 +22,4 @@ export async function run() {
   } catch (error) {
     core.setFailed(error.message);
   }
-}
+};
