@@ -1,8 +1,7 @@
 import core from "@actions/core";
 import github from "@actions/github";
 import { context } from "@actions/github";
-
-const Diff = require("diff");
+import * as Diff from "diff";
 
 const token = core.getInput("github_token", { required: true });
 const octokit = github.getOctokit(token);
