@@ -8,16 +8,11 @@ const octokit = github.getOctokit(token);
 const issue_number = context.payload.issue.number;
 const { owner, repo } = context.repo;
 
-const body = context.payload.issue.body;
-core.info(body);
+const body = context.payload.issue.body;\
 
-// test case
-const regex = /\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n[\\s]*?```/gm;
+const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
 
-core.info(regex.exec(body));
-core.info(regex.exec(body));
-core.info(regex.exec(body));
-core.info(regex.exec(body));
+core.info(JSON.stringify(body.match(regex)));
 
 // this is about to be real ugly
 // detect command with regex
