@@ -61,7 +61,7 @@ import { context } from "@actions/github";
 
     // The result can be accessed through the `m`-variable.
     m.forEach((match, groupIndex) => {
-      console.log(`Found match, group ${groupIndex}: ${match}`);
+      core.info(`Found match, group ${groupIndex}: ${match}`);
     });
   }
 
