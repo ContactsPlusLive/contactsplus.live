@@ -78,6 +78,14 @@ const matches = regex.test(body);
 
 core.info(body);
 
+const str2 = "fee fi fo fum";
+const re = /\w+\s/g;
+
+core.info(re.exec(str2)); // ["fee ", index: 0, input: "fee fi fo fum"]
+core.info(re.exec(str2)); // ["fi ", index: 4, input: "fee fi fo fum"]
+core.info(re.exec(str2)); // ["fo ", index: 7, input: "fee fi fo fum"]
+core.info(re.exec(str2)); // null
+
 core.info(matches);
 if (!matches) {
   core.info("❌ No commands found in issue body, gettin' outta here");
