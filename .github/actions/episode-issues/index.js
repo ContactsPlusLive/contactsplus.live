@@ -2,8 +2,6 @@ import core from "@actions/core";
 import github from "@actions/github";
 import { context } from "@actions/github";
 
-core.notice("Hello from episode-issues action!");
-
 (async () => {
   const token = core.getInput("github_token", { required: true });
   const octokit = github.getOctokit(token);
@@ -13,11 +11,16 @@ core.notice("Hello from episode-issues action!");
 
   const body = context.payload.issue.body.trim();
 
-  // for debugging
-  core.info(`Issue number: ${issue_number}`);
-  core.info(`Owner: ${owner}`);
-  core.info(`Repo: ${repo}`);
-  core.info(`Comment body: ${body}`);
+  // this is about to be real ugly
 
-  core.info("Fuck off");
+  // detect command with regex
+  const matches = body.match("/.([a-zA-Z]+)\n```yaml\n(X*?)```/gm");
+
+  if (!matches) {
+    core.info("❌ No commands found in issue body, gettin' outta here");
+    return;
+  }
+
+  core.info("✅ Found commands in issue body, let's do this");
+  core.info(matches);
 })();
