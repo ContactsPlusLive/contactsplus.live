@@ -2,6 +2,9 @@ import core from "@actions/core";
 import github from "@actions/github";
 import { context } from "@actions/github";
 
+import fs from "fs";
+import path from "path";
+
 (async () => {
   const token = core.getInput("github_token", { required: true });
   const octokit = github.getOctokit(token);
@@ -32,9 +35,6 @@ import { context } from "@actions/github";
     case "createepisode":
       core.notice(`🎉 Creating episode '${identifier}'`);
       // create file "src/content/${identifier}.yaml" with yaml content
-      const fs = require("fs");
-      const path = require("path");
-
       const contentPath = path.join("src", "content", `${identifier}.yaml`);
       fs.writeFileSync(contentPath, yaml);
 
