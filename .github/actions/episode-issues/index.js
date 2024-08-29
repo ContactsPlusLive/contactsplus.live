@@ -14,7 +14,7 @@ import { context } from "@actions/github";
   // this is about to be real ugly
 
   // detect command with regex
-  const matches = body.match("/.([a-zA-Z]+)\n```yaml\n(X*?)```/gm");
+  const matches = body.match(/\.([a-zA-Z]+)\n```yaml\n(\X*?)```/gm);
 
   core.info(matches);
   if (!matches) {
