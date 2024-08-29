@@ -5,11 +5,8 @@ on:
     types: [created, edited]
 
 permissions:
-  pull-requests: write
-  deployments: write
+  issues: write
   contents: write
-  checks: read
-  statuses: read
 
 jobs:
   test:
