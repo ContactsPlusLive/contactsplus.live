@@ -35,7 +35,12 @@ import path from "path";
     case "createepisode":
       core.notice(`🎉 Creating episode '${identifier}'`);
       // create file "src/content/${identifier}.yaml" with yaml content
-      const contentPath = path.join("src", "content", `${identifier}.yaml`);
+      const contentPath = path.join(
+        "src",
+        "content",
+        "episodes",
+        `${identifier}.yaml`,
+      );
       fs.writeFileSync(contentPath, yaml);
 
       // reply to issue with success message
