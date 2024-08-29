@@ -2,6 +2,8 @@ import core from "@actions/core";
 import github from "@actions/github";
 import { context } from "@actions/github";
 
+core.notice("Hello from episode-issues action!");
+
 async () => {
   try {
     const token = core.getInput("repo-token", { required: true });
