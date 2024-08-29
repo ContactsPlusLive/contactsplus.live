@@ -9,7 +9,7 @@ import path from "path";
   const token = core.getInput("github_token", { required: true });
   const octokit = github.getOctokit(token);
 
-  core.setOutput("changed", false);
+  core.setOutput("changed", "false");
 
   const issue_number = context.payload.issue.number;
   const { owner, repo } = context.repo;
@@ -46,7 +46,7 @@ import path from "path";
         body: `🎉 Created episode '${identifier}'`,
       });
 
-      core.setOutput("changed", true);
+      core.setOutput("changed", "true");
 
       core.notice("✅ Done creating episode");
       break;
