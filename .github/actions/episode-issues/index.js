@@ -76,7 +76,6 @@ const matches = regex.test(body);
 core.info(matches);
 if (!matches) {
   core.info("❌ No commands found in issue body, gettin' outta here");
-  return;
 }
 
 core.info("✅ Found commands in issue body, let's do this");
