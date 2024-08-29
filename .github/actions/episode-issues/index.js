@@ -49,7 +49,7 @@ Diff.diffChars(str, body).forEach((part) => {
   core.info(JSON.stringify(part));
 });
 
-const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
+const regex = /\.([a-zA-Z]+)[\n\r]```yaml[\n\r]([\S\s]*?)[\n\r][\s]*?```/gm;
 
 core.info(JSON.stringify(body.match(regex)));
 
