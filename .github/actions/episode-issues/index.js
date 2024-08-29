@@ -11,7 +11,7 @@ const { owner, repo } = context.repo;
 const body = context.payload.issue.body.trim();
 
 // test case
-const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n```/gm;
+const regex = /\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n```/gm;
 
 // Alternative syntax using RegExp constructor
 // const regex = new RegExp('\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n```', 'gm')
