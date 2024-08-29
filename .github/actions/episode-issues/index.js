@@ -49,7 +49,7 @@ core.info(str);
 
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
 
-core.info(JSON.stringify(body.match(regex)[1]));
+core.info(JSON.stringify(body.match(regex)));
 
 // this is about to be real ugly
 // detect command with regex
