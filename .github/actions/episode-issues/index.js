@@ -44,10 +44,9 @@ guests:
 \`\`\`
 awdawd`;
 
-core.info(body);
-core.info(str);
-
-core.info(body.localeCompare(str));
+Diff.diffChars(str, body).forEach((part) => {
+  core.info(JSON.stringify(part));
+});
 
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/;
 
