@@ -10,18 +10,14 @@ const { owner, repo } = context.repo;
 
 const body = context.payload.issue.body;
 
-const regex = /\.([a-zA-Z]+)[\r\n]+```yaml[\r\n]+([\S\s]*?)[\r\n]+[\s]*?```/;
-
-core.info(JSON.stringify(body.match(regex)[1]));
-
 // this is about to be real ugly
 // detect command with regex
-// const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n```/gm;
-// const matches = regex.exec(body);
+const regex = /\.([a-zA-Z]+)[\r\n]+```yaml[\r\n]+([\S\s]*?)[\r\n]+[\s]*?```/;
+const matches = body.match(regex);
 
-// core.info(matches);
-// if (!matches) {
-//   core.info("❌ No commands found in issue body, gettin' outta here");
-// }
+core.info(matches);
+if (!matches) {
+  core.info("❌ No commands found in issue body, gettin' outta here");
+}
 
-// core.info("✅ Found commands in issue body, let's do this");
+core.info("✅ Found commands in issue body, let's do this");
