@@ -20,7 +20,7 @@ async () => {
     core.info(`Repo: ${repo}`);
     core.info(`Comment body: ${body}`);
 
-    // return;
+    core.info("Fuck off");
   } catch (error) {
     core.setFailed(error.message);
   }
