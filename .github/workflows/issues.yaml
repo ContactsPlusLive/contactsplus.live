@@ -19,7 +19,7 @@ jobs:
       - name: Run episode-issues
         uses: ./.github/actions/episode-issues
       - name: Commit changes
-        if: steps.s3.outputs.changed == 'true'
+        if: ${{ steps.3.outputs.changed == 'true' }}
         uses: EndBug/add-and-commit@v9
         with:
           add: "src/content"
