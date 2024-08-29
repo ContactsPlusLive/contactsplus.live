@@ -14,7 +14,7 @@ const body = context.payload.issue.body.trim();
 const regex = /\.([a-zA-Z]+)\n```yaml\n([\S\s]*?)\n[\s]*?```/gm;
 
 // Alternative syntax using RegExp constructor
-const regex = new RegExp("\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n```", "gm");
+// const regex = new RegExp("\\.([a-zA-Z]+)\\n```yaml\\n([\\S\\s]*?)\\n```", "gm");
 
 const str = `14111awdawdawdadw
   .createEpisode
