@@ -53,6 +53,8 @@ import { context } from "@actions/github";
   `;
   let m;
 
+  core.info(m);
+
   while ((m = regex.exec(str)) !== null) {
     // This is necessary to avoid infinite loops with zero-width matches
     if (m.index === regex.lastIndex) {
