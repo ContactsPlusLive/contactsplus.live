@@ -35,4 +35,4 @@ jobs:
     uses: ./.github/workflows/deploy.yaml
     secrets: inherit
     with:
-      branch: ${{ steps.test.outputs.branch }}
+      branch: "update-episodes-${{ github.event.issue.number }}"
