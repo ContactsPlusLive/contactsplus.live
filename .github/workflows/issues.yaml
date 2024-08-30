@@ -9,6 +9,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  BRANCH_TO_MERGE: "${{ github.event.issue.number }}-update-content"
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,19 +23,15 @@ jobs:
       - id: episode-issues
         name: Run episode-issues
         uses: ./.github/actions/episode-issues
-      - name: Commit changes
+      - id: commit-changes
+        name: Commit changes
         if: ${{ steps.episode-issues.outputs.changed == 'true' }}
         uses: EndBug/add-and-commit@v9
         with:
           add: "src/content"
           message: "Update episodes content (issue #${{ github.event.issue.number }})"
-          new_branch: "update-episodes-${{ github.event.issue.number }}"
-  call-deploy:
-    needs: test
-    permissions:
-      contents: read
-      deployments: write
-    uses: ./.github/workflows/deploy.yaml
-    secrets: inherit
-    with:
-      branch: "update-episodes-${{ github.event.issue.number }}"
+          new_branch: ${{ env.BRANCH_TO_MERGE }}
+      - name: Create pull request
+        run: gh pr create -B main -H ${{ env.BRANCH_TO_MERGE }} --title 'Update episodes content (automated)' --body 'Closes \#${{ github.event.issue.number }}. This PR was automatically created by a GitHub Action.'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
