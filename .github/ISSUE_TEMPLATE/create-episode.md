@@ -2,14 +2,13 @@
 name: Create episode
 about: Create a new episode in the content folder.
 title: Create new episode SxEy
-labels: ''
-assignees: ''
-
+labels: ""
+assignees: ""
 ---
 
 # Season x Episode y
 
-.createEpisode
+.createEpisode sxey
 ```yaml
 ---
 season:
