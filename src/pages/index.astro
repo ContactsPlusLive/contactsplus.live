@@ -9,7 +9,7 @@ const episodes = await getCollection("episodes");
 const latestEpisodes = episodes
   .sort(
     (a, b) =>
-      new Date(b.data.airDate).getTime() - new Date(a.data.airDate).getTime(),
+      new Date(b.data.airDate).getTime() - new Date(a.data.airDate).getTime()
   )
   .slice(0, 3);
 ---
@@ -274,23 +274,6 @@ const latestEpisodes = episodes
             class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
           >
             <img
-              src="/img/matorin.jpg"
-              class="h-32 w-32 rounded-full object-cover"
-            />
-            <h3 class="mt-4 text-xl font-bold tracking-tight">Matorin</h3>
-            <p class="mt-2 text-lg font-medium tracking-tight">Co-host</p>
-            <div
-              class="mt-4 flex flex-row items-center justify-center space-x-3"
-            >
-              <a href="https://discord.com/users/227213301229027328" class="w-8"
-                ><img src="/img/discord.png" /></a
-              >
-            </div>
-          </div>
-          <div
-            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
-          >
-            <img
               src="/img/raspberry.png"
               class="h-32 w-32 rounded-full bg-slate-500"
             />
@@ -298,7 +281,7 @@ const latestEpisodes = episodes
               RaspberryKitty1
             </h3>
             <p class="mt-2 text-lg font-medium tracking-tight">
-              Socials &amp; Backend
+              Socials &amp; Moderator
             </p>
             <div
               class="mt-4 flex flex-row items-center justify-center space-x-3"
