@@ -3,6 +3,7 @@ import { defineDb, defineTable, column } from "astro:db";
 const Episode = defineTable({
   columns: {
     id: column.number({ primaryKey: true, unique: true }),
+    slug: column.text({ unique: true }),
     season: column.number(),
     episode: column.number(),
     title: column.text(),
@@ -16,7 +17,7 @@ const Episode = defineTable({
 
 const EpisodeTags = defineTable({
   columns: {
-    id: column.number({ primaryKey: true }),
+    id: column.number({ primaryKey: true, unique: true }),
     episodeID: column.number({ references: () => Episode.columns.id }),
     tag: column.text(),
   },
@@ -45,5 +46,10 @@ const EpisodePeople = defineTable({
 
 // https://astro.build/db/config
 export default defineDb({
-  tables: {},
+  tables: {
+    Episode,
+    EpisodeTags,
+    People,
+    EpisodePeople,
+  },
 });
