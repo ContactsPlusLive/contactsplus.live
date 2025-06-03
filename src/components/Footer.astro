@@ -1,12 +1,9 @@
 ---
-let year =
-  new Date().getFullYear() == 2023
-    ? 2023
-    : `2023 - ${new Date().getFullYear()}`;
+let year = new Date().getFullYear();
 ---
 
 <footer
-  class="flex h-20 flex-col items-center justify-center border-t border-slate-600 bg-slate-800"
+  class="flex h-16 flex-col items-center justify-center border-t border-slate-600 bg-slate-800 text-sm font-light"
 >
   <span
     >&copy; {year} Contacts Plus - <a
