@@ -1,0 +1,34 @@
+---
+export interface Props {
+  episode: {
+    season: {
+      season_num: number;
+    };
+    episode_num: number;
+    thumbnail: string;
+    title: string;
+    published_at: string;
+  };
+}
+import { getNiceDate } from "../content/config";
+const { episode } = Astro.props;
+---
+
+<div class="w-full md:w-80">
+  <a href={`/episodes/s${episode.season.season_num}e${episode.episode_num}`}>
+    <img
+      class="aspect-video h-auto w-full object-cover transition-all hover:brightness-75 md:w-80"
+      src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
+    />
+    <div class="mt-2 flex flex-row gap-3 text-sm font-light">
+      {/* prettier-ignore */}
+      <span class="font-semibold">
+        S{episode.season.season_num} E{episode.episode_num}
+      </span>
+      <span class="text-slate-400">
+        {getNiceDate(episode.published_at)}
+      </span>
+    </div>
+    <span class="leading-tight">{episode.title}</span>
+  </a>
+</div>

@@ -7,12 +7,8 @@ import { getNiceDate } from "../content/config";
 import directus from "../../lib/directus";
 import { readItems } from "@directus/sdk";
 
-// const episodes = await getCollection("episodes");
-// const sortedEpisodes = episodes.sort((a, b) => {
-//   const aDate = new Date(a.data.airDate);
-//   const bDate = new Date(b.data.airDate);
-//   return aDate > bDate ? -1 : 1;
-// });
+import LiveCTA from "../components/LiveCTA.astro";
+import EpisodeThumb from "../components/EpisodeThumb.astro";
 
 const episodes = await directus.request(
   readItems("videos", {
@@ -49,41 +45,7 @@ const episodes = await directus.request(
         </p>
       </div>
     </hero>
-    <section
-      id="twitch"
-      class="flex w-full flex-col items-center justify-center"
-    >
-      <div
-        class="my-12 flex w-11/12 flex-row items-center justify-center gap-8 rounded-lg border border-slate-700 bg-gradient-to-tr from-slate-950/0 to-purple-900 p-6 md:w-1/2"
-      >
-        <div class="flex flex-col items-center">
-          <h2 class="text-center text-4xl font-bold tracking-tight">
-            Live on Twitch
-          </h2>
-          <p class="mt-4 max-w-[50em] text-center">
-            Join us live on Twitch every Thursday, Friday, and Saturday at 8pm
-            ET. We'll be chatting with guests, playing games, and being chaotic.
-          </p>
-          <div
-            class="mb-5 mt-8 transition-all hover:-translate-x-1 hover:-translate-y-1"
-          >
-            <a
-              class="border-2 border-white bg-purple-900 p-3 text-lg font-bold outline-none transition-all duration-100 hover:shadow-[4px_4px_white]"
-              href="https://twitch.tv/contactsplus">Watch LIVE</a
-            >
-          </div>
-        </div>
-        <div class="hidden md:block">
-          <a href="https://twitch.tv/contactsplus">
-            <img
-              class="h-auto w-48 rounded-lg"
-              src="/img/twitch_color.png"
-              alt="Twitch Logo"
-            />
-          </a>
-        </div>
-      </div>
-    </section>
+    <LiveCTA />
     <hr class="mb-8 w-72 border-t-2 border-slate-700" />
     <section id="browse" class="w-full px-4 md:px-24">
       <h2 class="mb-8 text-center text-5xl font-bold tracking-tight">
@@ -158,30 +120,7 @@ const episodes = await directus.request(
           missed.
         </p>
         <div class="my-3 flex flex-row flex-wrap justify-center gap-4">
-          {
-            episodes.map((episode) => (
-              <div class="w-full md:w-80">
-                <a
-                  href={`/episodes/s${episode.season.season_num}e${episode.episode_num}`}
-                >
-                  <img
-                    class="aspect-video h-auto w-full object-cover transition-all hover:brightness-75 md:w-80"
-                    src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
-                  />
-                  <div class="mt-2 flex flex-row gap-3 text-sm font-light">
-                    {/* prettier-ignore */}
-                    <span class="font-semibold">
-                      S{episode.season.season_num} E{episode.episode_num}
-                    </span>
-                    <span class="text-slate-400">
-                      {getNiceDate(episode.published_at)}
-                    </span>
-                  </div>
-                  <span class="leading-tight">{episode.title}</span>
-                </a>
-              </div>
-            ))
-          }
+          {episodes.map((episode) => <EpisodeThumb episode={episode} />)}
         </div>
       </div>
     </section>

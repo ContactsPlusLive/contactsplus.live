@@ -1,0 +1,45 @@
+---
+import { faPatreon, faStripe } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import Peertube from "../../public/img/peertube.svg";
+---
+
+<div
+  id="support"
+  class="w-4/5 rounded-lg border border-slate-700 bg-gradient-to-br from-[#020617] to-blue-600 lg:w-3/5"
+>
+  <div class="m-10">
+    <p class="text-base font-semibold leading-7 text-blue-600">You should</p>
+    <h2 class="text-4xl font-bold tracking-tight">
+      <a href="/support" class="hover:underline">Support Us</a>
+    </h2>
+    <p class="mt-4 max-w-md">
+      We use donations to increase the production quality of our content and
+      award our staff for their hard work. Like <a
+        href="updateme"
+        class="underline">this</a
+      >.
+    </p>
+    <p class="mt-4 max-w-md">
+      You can support us by becoming a premium member of our Peertube, donating
+      to our Patreon, directly donating via Stripe, or just by being apart of
+      the community!
+    </p>
+    <div class="mt-8 flex flex-row items-center justify-start space-x-4">
+      <a
+        href="https://tube.contactsplus.live/p/premium"
+        rel="me"
+        class="w-10 fill-transparent"><Peertube /></a
+      >
+      <a rel="me" href="https://www.patreon.com/contactsplus" class="w-12"
+        ><FontAwesomeIcon icon={faPatreon} /></a
+      >
+      <a
+        rel="me"
+        href="https://donate.stripe.com/fZe4icgQ13sl1Ik5kk"
+        class="w-20"><FontAwesomeIcon icon={faStripe} /></a
+      >
+    </div>
+  </div>
+</div>

@@ -3,16 +3,9 @@ import { readItems, readSingleton } from "@directus/sdk";
 import directus from "../../lib/directus";
 import { getNiceDate } from "../content/config";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
 import StaffCard from "../components/StaffCard.astro";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDiscord,
-  faPatreon,
-  faTwitch,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
-import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import SupportCTA from "../components/SupportCTA.astro";
+import PeertubeFull from "../../public/img/peertube full.svg";
 
 // const episodes = await getCollection("episodes");
 
@@ -125,10 +118,10 @@ const staff = await directus.request(
           class="absolute inset-y-8 flex w-3/4 flex-row items-center justify-center space-x-10"
         >
           <img
-            class="hidden w-80 md:block"
+            class="hidden w-80 lg:block"
             src={`https://meta.contactsplus.live/assets/${globals.hero_wolf}`}
           />
-          <div class="w-full md:w-1/2">
+          <div class="w-full lg:w-1/2">
             <h1 class="text-6xl font-bold tracking-tight md:text-7xl">
               {globals.main_hero}
             </h1>
@@ -139,7 +132,7 @@ const staff = await directus.request(
         </div>
       </div>
 
-      <div id="watch" class="flex w-5/6 flex-col items-center lg:w-1/2">
+      <div id="watch" class="flex w-4/5 flex-col items-center lg:w-2/3">
         <div class="text-center">
           <p class="text-base font-semibold leading-7 text-blue-600">
             You should
@@ -149,28 +142,27 @@ const staff = await directus.request(
           </h2>
         </div>
         <div
-          class="flex w-full flex-row flex-wrap items-center justify-center gap-3 pt-4"
+          class="mt-4 flex w-full flex-col items-center justify-center space-y-8 rounded border border-slate-700 bg-slate-900 lg:w-2/3"
         >
           <div
-            class="flex w-full flex-col items-center self-stretch rounded border border-slate-700 bg-slate-900 p-5 text-center sm:w-1/3"
+            class="flex w-full flex-row items-center justify-center gap-4 px-2 pt-4"
           >
-            <h3 class="text-xl font-bold tracking-tight">Live</h3>
-            <p>Every Thursday, Friday, and Saturday 8pm ET</p>
-            <a href="https://www.twitch.tv/contactsplus" class="mt-4 h-12 w-12"
-              ><img src="/img/twitch_color.png" /></a
+            <div
+              class="flex w-full flex-col items-center self-stretch pt-4 text-center sm:w-1/3"
             >
+              <h3 class="text-xl font-bold tracking-tight">Live</h3>
+              <p>Every Thursday, Friday, and Saturday 8pm ET</p>
+            </div>
+            <div
+              class="flex w-full flex-col items-center self-stretch pt-4 text-center sm:w-1/3"
+            >
+              <h3 class="text-xl font-bold tracking-tight">Video on Demand</h3>
+              <p>Episodes available since Season 6</p>
+            </div>
           </div>
-          <div
-            class="flex w-full flex-col items-center self-stretch rounded border border-slate-700 bg-slate-900 p-5 text-center sm:w-1/3"
-          >
-            <h3 class="text-xl font-bold tracking-tight">Video on Demand</h3>
-            <p>Full episode list available</p>
-            <p class="text-sm text-slate-600">
-              (it might take some time for us to keep it up-to-date)
-            </p>
-            <a
-              class="mt-4 rounded border border-slate-700 bg-blue-600 p-2 font-bold transition-colors hover:bg-blue-800"
-              href="/watch">Watch</a
+          <div class="flex w-full flex-row items-center justify-center pb-8">
+            <a href="https://tube.contactsplus.live" class="w-2/3 lg:w-1/3"
+              ><PeertubeFull /></a
             >
           </div>
         </div>
@@ -206,55 +198,7 @@ const staff = await directus.request(
           </div>
         </div>
       </div>
-      <div
-        id="support"
-        class="w-4/5 rounded-lg border border-slate-700 bg-gradient-to-br from-[#020617] to-blue-600 lg:w-3/5"
-      >
-        <div class="m-10">
-          <p class="text-base font-semibold leading-7 text-blue-600">
-            You should
-          </p>
-          <h2 class="text-4xl font-bold tracking-tight">
-            <a href="/support" class="hover:underline">Support Us</a>
-          </h2>
-          <p class="mt-4 max-w-md">
-            We use donations to increase the production quality of our content
-            and award our staff for their hard work. Like <a
-              href="updateme"
-              class="underline">this</a
-            >.
-          </p>
-          <p class="mt-4 max-w-md">
-            You can support us by donating to our Patreon, subscribing to our
-            Twitch channel, or just by being apart of the community!
-          </p>
-          <div class="mt-8 flex flex-row items-center justify-start">
-            <a
-              rel="me"
-              href="https://www.patreon.com/contactsplus"
-              class="mr-4 w-12"><FontAwesomeIcon icon={faPatreon} /></a
-            >
-            <a
-              rel="me"
-              href="https://www.twitch.tv/contactsplus"
-              class="mr-4 w-12"><FontAwesomeIcon icon={faTwitch} /></a
-            >
-            <a
-              rel="me"
-              href="https://youtube.com/@contactsplus"
-              class="mr-4 w-12"><FontAwesomeIcon icon={faYoutube} /></a
-            >
-            <a rel="me" href="https://discord.gg/zju2NzpnjF" class="mr-2 w-12"
-              ><FontAwesomeIcon icon={faDiscord} /></a
-            >
-            <a
-              href="https://cyberfurz.social/@contacts_plus"
-              rel="me"
-              class="mr-4 w-12"><FontAwesomeIcon icon={faGlobe} /></a
-            >
-          </div>
-        </div>
-      </div>
+      <SupportCTA />
       <div id="team" class="w-5/6">
         <div class="text-center">
           <p class="text-base font-semibold leading-7 text-blue-600">

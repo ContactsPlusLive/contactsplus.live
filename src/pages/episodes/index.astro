@@ -1,14 +1,25 @@
 ---
+import { readItems } from "@directus/sdk";
+import directus from "../../../lib/directus";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { getCollection } from "astro:content";
+import LiveCTA from "../../components/LiveCTA.astro";
+import EpisodeThumb from "../../components/EpisodeThumb.astro";
 
-const episodes = await getCollection("episodes");
-const sortedEpisodes = episodes.sort((a, b) => {
-  const aDate = new Date(a.data.airDate);
-  const bDate = new Date(b.data.airDate);
-  return aDate > bDate ? -1 : 1;
-});
+const episodes = await directus.request(
+  readItems("videos", {
+    fields: [
+      "episode_num",
+      "title",
+      "published_at",
+      "thumbnail",
+      { season: ["season_num"] },
+    ],
+    sort: ["-published_at"],
+    limit: 25,
+  }),
+);
 ---
 
 <BaseLayout title="Contacts Plus – Episodes">
@@ -31,41 +42,7 @@ const sortedEpisodes = episodes.sort((a, b) => {
         </p>
       </div>
     </hero>
-    <section
-      id="twitch"
-      class="flex w-full flex-col items-center justify-center"
-    >
-      <div
-        class="my-12 flex w-11/12 flex-row items-center justify-center gap-8 rounded-lg border border-slate-700 bg-gradient-to-tr from-slate-950/0 to-purple-900 p-6 md:w-1/2"
-      >
-        <div class="flex flex-col items-center">
-          <h2 class="text-center text-4xl font-bold tracking-tight">
-            Live on Twitch
-          </h2>
-          <p class="mt-4 max-w-[50em] text-center">
-            Join us live on Twitch every Thursday, Friday, and Saturday at 8pm
-            ET. We'll be chatting with guests, playing games, and being chaotic.
-          </p>
-          <div
-            class="mb-5 mt-8 transition-all hover:-translate-x-1 hover:-translate-y-1"
-          >
-            <a
-              class="border-2 border-white bg-purple-900 p-3 text-lg font-bold outline-none transition-all duration-100 hover:shadow-[4px_4px_white]"
-              href="https://twitch.tv/contactsplus">Watch LIVE</a
-            >
-          </div>
-        </div>
-        <div class="hidden md:block">
-          <a href="https://twitch.tv/contactsplus">
-            <img
-              class="h-auto w-48 rounded-lg"
-              src="/img/twitch_color.png"
-              alt="Twitch Logo"
-            />
-          </a>
-        </div>
-      </div>
-    </section>
+    <LiveCTA />
     <hr class="mb-8 w-72 border-t-2 border-slate-700" />
     <section
       id="browse"
@@ -77,22 +54,12 @@ const sortedEpisodes = episodes.sort((a, b) => {
           >LATEST</span
         >
       </h2>
-      <p class="w-11/12 text-center md:w-1/3">
-        Currently a work in progress... for now have this list of all our recent
-        episodes! (that I've actually catalogged)
-      </p>
-      <ul class="w-11/12 list-outside list-disc md:w-1/4">
-        {
-          sortedEpisodes.map((episode) => (
-            <li>
-              <a href={`/episodes/${episode.id}`} class="hover:underline">
-                S{episode.data.season} E{episode.data.episode} -{" "}
-                {episode.data.title}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <div
+        class="mb-8 flex flex-row flex-wrap items-stretch justify-center gap-2"
+      >
+        {episodes.map((episode) => <EpisodeThumb episode={episode} />)}
+      </div>
     </section>
+    <p>I can't add pagination because Astro is stupid.</p>
   </main>
 </BaseLayout>
