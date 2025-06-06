@@ -4,13 +4,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 
 import { getNiceDate } from "../content/config";
+import directus from "../../lib/directus";
+import { readItems } from "@directus/sdk";
 
-const episodes = await getCollection("episodes");
-const sortedEpisodes = episodes.sort((a, b) => {
-  const aDate = new Date(a.data.airDate);
-  const bDate = new Date(b.data.airDate);
-  return aDate > bDate ? -1 : 1;
-});
+// const episodes = await getCollection("episodes");
+// const sortedEpisodes = episodes.sort((a, b) => {
+//   const aDate = new Date(a.data.airDate);
+//   const bDate = new Date(b.data.airDate);
+//   return aDate > bDate ? -1 : 1;
+// });
+
+const episodes = await directus.request(
+  readItems("videos", {
+    fields: [
+      "episode_num",
+      "title",
+      "published_at",
+      "thumbnail",
+      { season: ["season_num"] },
+    ],
+    sort: ["-published_at"],
+    limit: 15,
+  }),
+);
 ---
 
 <BaseLayout title="Contacts Plus – Watch">
@@ -143,23 +159,25 @@ const sortedEpisodes = episodes.sort((a, b) => {
         </p>
         <div class="my-3 flex flex-row flex-wrap justify-center gap-4">
           {
-            sortedEpisodes.map((otherEpisode) => (
+            episodes.map((episode) => (
               <div class="w-full md:w-80">
-                <a href={`/episodes/${otherEpisode.id}`}>
+                <a
+                  href={`/episodes/s${episode.season.season_num}e${episode.episode_num}`}
+                >
                   <img
                     class="aspect-video h-auto w-full object-cover transition-all hover:brightness-75 md:w-80"
-                    src={`https://i.ytimg.com/vi/${otherEpisode.data.ytID}/maxresdefault.jpg`}
+                    src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
                   />
                   <div class="mt-2 flex flex-row gap-3 text-sm font-light">
                     {/* prettier-ignore */}
                     <span class="font-semibold">
-                      S{otherEpisode.data.season} E{otherEpisode.data.episode}
+                      S{episode.season.season_num} E{episode.episode_num}
                     </span>
                     <span class="text-slate-400">
-                      {getNiceDate(otherEpisode.data.airDate)}
+                      {getNiceDate(episode.published_at)}
                     </span>
                   </div>
-                  <span class="leading-tight">{otherEpisode.data.title}</span>
+                  <span class="leading-tight">{episode.title}</span>
                 </a>
               </div>
             ))

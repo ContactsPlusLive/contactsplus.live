@@ -1,17 +1,72 @@
 ---
+import { readItems, readSingleton } from "@directus/sdk";
+import directus from "../../lib/directus";
 import { getNiceDate } from "../content/config";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import StaffCard from "../components/StaffCard.astro";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faDiscord,
+  faPatreon,
+  faTwitch,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 
-const episodes = await getCollection("episodes");
+// const episodes = await getCollection("episodes");
 
-// airDate is a string, so we need to convert it to a Date object
-const latestEpisodes = episodes
-  .sort(
-    (a, b) =>
-      new Date(b.data.airDate).getTime() - new Date(a.data.airDate).getTime()
-  )
-  .slice(0, 3);
+// // airDate is a string, so we need to convert it to a Date object
+// const latestEpisodes = episodes
+//   .sort(
+//     (a, b) =>
+//       new Date(b.data.airDate).getTime() - new Date(a.data.airDate).getTime()
+//   )
+//   .slice(0, 3);
+
+const globals = await directus.request(
+  readSingleton("global", {
+    fields: ["main_hero", "hero_cover", "hero_wolf"],
+  }),
+);
+
+const latestEpisodes = await directus.request(
+  readItems("videos", {
+    fields: [
+      "id",
+      { season: ["season_num"] },
+      "episode_num",
+      "title",
+      "thumbnail",
+      "published_at",
+    ],
+    sort: ["-published_at"],
+    limit: 3,
+  }),
+);
+
+const staff = await directus.request(
+  readItems("people", {
+    fields: [
+      "sort",
+      "name",
+      "staff_title",
+      "portrait",
+      "discord",
+      "telegram",
+      "bsky",
+      "fediverse",
+      "website",
+      "xitter",
+    ],
+    filter: {
+      staff: {
+        _eq: true,
+      },
+    },
+    sort: ["sort"],
+  }),
+);
 ---
 
 <style>
@@ -63,15 +118,19 @@ const latestEpisodes = episodes
       >
         <img
           class="absolute inset-0 h-full w-full object-cover object-center brightness-50"
-          src="/img/pexels-rbrigant44-771881.png"
+          src={`https://meta.contactsplus.live/assets/${globals.hero_cover}`}
+          alt="Contacts Plus Hero Cover"
         />
         <div
           class="absolute inset-y-8 flex w-3/4 flex-row items-center justify-center space-x-10"
         >
-          <img class="hidden w-80 md:block" src="/img/wolf-rgb.png" />
+          <img
+            class="hidden w-80 md:block"
+            src={`https://meta.contactsplus.live/assets/${globals.hero_wolf}`}
+          />
           <div class="w-full md:w-1/2">
             <h1 class="text-6xl font-bold tracking-tight md:text-7xl">
-              Content straight from the metaverse.
+              {globals.main_hero}
             </h1>
             <p class="mt-5 text-xl font-light leading-8" id="tagline">
               An existential crisis away from becoming a boyband.
@@ -124,22 +183,20 @@ const latestEpisodes = episodes
             {
               latestEpisodes.map((episode) => (
                 <div class="flex w-full flex-col rounded-lg border border-slate-700 transition hover:bg-slate-800 sm:w-72">
-                  <a href={"/episodes/" + episode.id}>
+                  <a
+                    href={`/episodes/s${episode.season.season_num}e${episode.episode_num}`}
+                  >
                     <img
                       class="h-auto w-full rounded-t-lg"
-                      src={
-                        "https://i.ytimg.com/vi/" +
-                        episode.data.ytID +
-                        "/maxresdefault.jpg"
-                      }
+                      src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
                     />
                     <div class="w-full p-4">
                       <h3 class="text-xl font-bold">
-                        S{episode.data.season} E{episode.data.episode}
+                        S{episode.season.season_num} E{episode.episode_num}
                       </h3>
-                      <p class="mt-2">{episode.data.title}</p>
+                      <p class="mt-2">{episode.title}</p>
                       <p class="mt-2 text-sm text-slate-600">
-                        {getNiceDate(episode.data.airDate)}
+                        {getNiceDate(episode.published_at)}
                       </p>
                     </div>
                   </a>
@@ -172,22 +229,28 @@ const latestEpisodes = episodes
             Twitch channel, or just by being apart of the community!
           </p>
           <div class="mt-8 flex flex-row items-center justify-start">
-            <a href="https://www.patreon.com/contactsplus" class="mr-4 w-12"
-              ><img src="/img/patreon.png" /></a
+            <a
+              rel="me"
+              href="https://www.patreon.com/contactsplus"
+              class="mr-4 w-12"><FontAwesomeIcon icon={faPatreon} /></a
             >
-            <a href="https://www.twitch.tv/contactsplus" class="mr-4 w-12"
-              ><img src="/img/twitch_white.png" /></a
+            <a
+              rel="me"
+              href="https://www.twitch.tv/contactsplus"
+              class="mr-4 w-12"><FontAwesomeIcon icon={faTwitch} /></a
             >
-            <a href="https://youtube.com/@contactsplus" class="mr-4 w-12"
-              ><img src="/img/youtube_white.png" /></a
+            <a
+              rel="me"
+              href="https://youtube.com/@contactsplus"
+              class="mr-4 w-12"><FontAwesomeIcon icon={faYoutube} /></a
             >
-            <a href="https://discord.gg/zju2NzpnjF" class="mr-2 w-12"
-              ><img src="/img/discord.png" /></a
+            <a rel="me" href="https://discord.gg/zju2NzpnjF" class="mr-2 w-12"
+              ><FontAwesomeIcon icon={faDiscord} /></a
             >
             <a
               href="https://cyberfurz.social/@contacts_plus"
               rel="me"
-              class="mr-4 w-12"><img src="/img/fediverse.png" /></a
+              class="mr-4 w-12"><FontAwesomeIcon icon={faGlobe} /></a
             >
           </div>
         </div>
@@ -204,99 +267,7 @@ const latestEpisodes = episodes
         <div
           class="mt-10 flex flex-row flex-wrap items-stretch justify-center gap-8 text-center"
         >
-          <div
-            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
-          >
-            <img
-              src="/img/wolf.jpg"
-              class="h-32 w-32 rounded-full object-cover"
-            />
-            <h3 class="mt-4 text-xl font-bold tracking-tight">
-              Wolf Seisenbacher
-            </h3>
-            <p class="mt-2 text-lg font-medium tracking-tight">
-              Creator &amp; Host
-            </p>
-            <div
-              class="mt-4 flex flex-row items-center justify-center space-x-3"
-            >
-              <a href="https://discord.com/users/125788463831318528" class="w-8"
-                ><img src="/img/discord.png" /></a
-              >
-            </div>
-          </div>
-          <div
-            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
-          >
-            <img
-              src="/img/nootsponge.jpg"
-              class="h-32 w-32 rounded-full object-cover"
-            />
-            <h3 class="mt-4 text-xl font-bold tracking-tight">NootSponge</h3>
-            <p class="mt-2 text-lg font-medium tracking-tight">Producer</p>
-            <div
-              class="mt-4 flex flex-row items-center justify-center space-x-3"
-            >
-              <a href="https://discord.com/users/148680149548793856" class="w-8"
-                ><img src="/img/discord.png" /></a
-              >
-              <a href="https://latex.monster/nootsponge" class="w-8"
-                ><img src="/img/fediverse.png" /></a
-              >
-              <a href="https://nootsponge.com" class="w-8"
-                ><img src="/img/link-solid.png" /></a
-              >
-            </div>
-          </div>
-          <div
-            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
-          >
-            <img
-              src="/img/glitch.jpg"
-              class="h-32 w-32 rounded-full object-cover"
-            />
-            <h3 class="mt-4 text-xl font-bold tracking-tight">GlitchFlux</h3>
-            <p class="mt-2 text-lg font-medium tracking-tight">
-              Production Design
-            </p>
-            <div
-              class="mt-4 flex flex-row items-center justify-center space-x-3"
-            >
-              <a href="https://discord.com/users/240615441624596481" class="w-8"
-                ><img src="/img/discord.png" /></a
-              >
-              <a href="https://linktr.ee/glitchflux" class="w-8"
-                ><img src="/img/link-solid.png" /></a
-              >
-            </div>
-          </div>
-          <div
-            class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
-          >
-            <img
-              src="/img/raspberry.png"
-              class="h-32 w-32 rounded-full bg-slate-500"
-            />
-            <h3 class="mt-4 text-xl font-bold tracking-tight">
-              RaspberryKitty1
-            </h3>
-            <p class="mt-2 text-lg font-medium tracking-tight">
-              Socials &amp; Moderator
-            </p>
-            <div
-              class="mt-4 flex flex-row items-center justify-center space-x-3"
-            >
-              <a href="https://discord.com/users/341822915957751820" class="w-8"
-                ><img src="/img/discord.png" /></a
-              >
-              <a href="https://twitter.com/raspberrykitty1" class="w-8"
-                ><img src="/img/twitter.png" /></a
-              >
-              <a href="https://cyberfurz.social/@raspberrykitty1" class="w-8"
-                ><img src="/img/fediverse.png" /></a
-              >
-            </div>
-          </div>
+          {staff.map((member) => <StaffCard people={member} />)}
         </div>
       </div>
     </artcle>

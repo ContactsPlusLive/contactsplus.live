@@ -2,21 +2,40 @@
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import directus from "../../../lib/directus";
+import { readItems } from "@directus/sdk";
 
-const episodes = await getCollection("episodes");
-const sortedEpisodes = episodes
-  .sort((a, b) => {
-    const aDate = new Date(a.data.airDate);
-    const bDate = new Date(b.data.airDate);
-    return aDate > bDate ? -1 : 1;
-  })
-  .filter((episode) => episode.id !== Astro.params.slug);
+// const episodes = await getCollection("episodes");
+// const sortedEpisodes = episodes
+//   .sort((a, b) => {
+//     const aDate = new Date(a.data.airDate);
+//     const bDate = new Date(b.data.airDate);
+//     return aDate > bDate ? -1 : 1;
+//   })
+//   .filter((episode) => episode.id !== Astro.params.slug);
 
 export const getStaticPaths = (async () => {
-  const episodes = await getCollection("episodes");
+  const episodes = await directus.request(
+    readItems("videos", {
+      fields: [
+        "id",
+        { season: ["season_num"] },
+        "episode_num",
+        "title",
+        "blurb",
+        "published_at",
+        "thumbnail",
+        "watch_link",
+        "tags",
+        {
+          crew: [{ people_id: ["name"] }, "role"],
+        },
+      ],
+    }),
+  );
   return episodes.map((episode) => ({
     params: {
-      slug: episode.id,
+      slug: `s${episode.season.season_num}e${episode.episode_num}`,
     },
     props: { episode },
   }));
@@ -25,17 +44,74 @@ export const getStaticPaths = (async () => {
 const { episode } = Astro.props;
 
 import { getCrewRoles, getNiceDate } from "../../content/config";
+
+const guests = episode.crew!.filter((crewMember) => crewMember.role == "guest");
+
+const otherEpisodes = await directus
+  .request(
+    readItems("videos", {
+      fields: [
+        "id",
+        { season: ["season_num"] },
+        "episode_num",
+        "title",
+        "published_at",
+        "thumbnail",
+      ],
+      filter: {
+        published_at: {
+          _gte: episode.published_at,
+        },
+        id: {
+          _neq: episode.id,
+        },
+      },
+      sort: ["published_at"],
+      limit: 5,
+    }),
+  )
+  .then((episodes) =>
+    episodes.sort((a, b) => {
+      //reverse sort by published_at
+      const aDate = new Date(a.published_at);
+      const bDate = new Date(b.published_at);
+      return aDate > bDate ? -1 : 1;
+    }),
+  );
+
+const otherEpisodesBefore = await directus.request(
+  readItems("videos", {
+    fields: [
+      "id",
+      { season: ["season_num"] },
+      "episode_num",
+      "title",
+      "published_at",
+      "thumbnail",
+    ],
+    sort: ["-published_at"],
+    filter: {
+      published_at: {
+        _lt: episode.published_at,
+      },
+      id: {
+        _neq: episode.id,
+      },
+    },
+    limit: 9 - otherEpisodes.length,
+  }),
+);
 ---
 
 <BaseLayout
-  title=`Contacts Plus – S${episode.data.season} E${episode.data.episode}`
+  title=`Contacts Plus – S${episode.season.season_num} E${episode.episode_num}`
 >
   <main class="flex w-full flex-col items-center">
     <cover
       class="fixed inset-0 -z-20 flex h-screen w-full justify-center overflow-hidden"
     >
       <img
-        src=`https://i.ytimg.com/vi/${episode.data.ytID}/maxresdefault.jpg`
+        src=`https://meta.contactsplus.live/assets/${episode.thumbnail}`
         alt="YouTube thumbnail"
         class="h-auto w-full object-cover"
       />
@@ -60,30 +136,30 @@ import { getCrewRoles, getNiceDate } from "../../content/config";
       <div class="min-h-screen w-full px-4 pt-[24em] md:px-24">
         <div class="w-full md:w-1/2">
           <h1 class="text-6xl font-bold">
-            {episode.data.title}
+            {episode.title}
           </h1>
           <div class="mt-4 flex flex-row space-x-4 text-lg font-light">
             <div>
-              <span>S{episode.data.season}</span>
-              <span>E{episode.data.episode}</span>
+              <span>S{episode.season.season_num}</span>
+              <span>E{episode.episode_num}</span>
             </div>
-            <span>{getNiceDate(episode.data.airDate)}</span>
+            <span>{getNiceDate(episode.published_at)}</span>
           </div>
           <div class="mt-2">
             <p>
-              {episode.data.description}
+              {episode.blurb}
             </p>
           </div>
           <div class="mt-6">
             <a
-              href=`https://youtu.be/${episode.data.ytID}`
+              href={episode.watch_link}
               class="rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-900 p-3 hover:from-indigo-900 hover:to-indigo-500"
             >
               Watch video now</a
             >
           </div>
           <div class="mt-5">
-            Tags: {episode.data.tags.join(", ")}
+            Tags: {episode.tags ? episode.tags.join(", ") : "None"}
           </div>
         </div>
         <div class="mt-10">
@@ -95,11 +171,15 @@ import { getCrewRoles, getNiceDate } from "../../content/config";
               <h3 class="text-xl font-bold">Crew</h3>
               <ul class="list-inside list-disc">
                 {
-                  episode.data.crew.map((crewMember) => (
-                    <li>
-                      {crewMember.name} &ndash; {getCrewRoles(crewMember.role)}
-                    </li>
-                  ))
+                  episode.crew!.map((crewMember) => {
+                    if (crewMember.role == "guest") return "";
+                    return (
+                      <li>
+                        {crewMember.people_id.name} &ndash;{" "}
+                        {getCrewRoles(crewMember.role)}
+                      </li>
+                    );
+                  })
                 }
               </ul>
             </div>
@@ -108,15 +188,14 @@ import { getCrewRoles, getNiceDate } from "../../content/config";
             >
               <h3 class="text-xl font-bold">Guests</h3>
               {
-                ((episode.data.guests === undefined ||
-                  episode.data.guests.length == 0) && (
-                  <p>No guests in this episode.</p>
-                )) || (
+                guests.length > 0 ? (
                   <ul class="list-inside list-disc">
-                    {episode.data.guests!.map((guest) => (
-                      <li>{guest}</li>
+                    {guests.map((guest) => (
+                      <li>{guest.people_id.name}</li>
                     ))}
                   </ul>
+                ) : (
+                  <p>No guests in this episode.</p>
                 )
               }
             </div>
@@ -125,28 +204,83 @@ import { getCrewRoles, getNiceDate } from "../../content/config";
             <h2 class="mt-10 text-3xl font-bold">Other Episodes</h2>
             <div class="mt-3 flex flex-row flex-wrap justify-start gap-6">
               {
-                sortedEpisodes.map((otherEpisode) => (
+                otherEpisodes.map((episode) => (
                   <div class="w-full md:w-80">
-                    <a href={`/episodes/${otherEpisode.id}`}>
+                    <a
+                      href={`/episodes/s${episode.season.season_num}e${episode.episode_num}`}
+                    >
                       <img
                         class="aspect-video h-auto w-full object-cover transition-all hover:brightness-75 md:w-80"
-                        src={`https://i.ytimg.com/vi/${otherEpisode.data.ytID}/maxresdefault.jpg`}
+                        src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
                       />
                       <div class="mt-2 flex flex-row gap-3 text-sm font-light">
                         {/* prettier-ignore */}
                         <span class="font-semibold">
-                          S{otherEpisode.data.season} E{otherEpisode.data.episode}
+                          S{episode.season.season_num} E{episode.episode_num}
                         </span>
                         <span class="text-slate-400">
-                          {getNiceDate(otherEpisode.data.airDate)}
+                          {getNiceDate(episode.published_at)}
                         </span>
                       </div>
-                      <span class="leading-tight">
-                        {otherEpisode.data.title}
-                      </span>
+                      <span class="leading-tight">{episode.title}</span>
                     </a>
                   </div>
                 ))
+              }
+              <div class="w-full md:w-80">
+                <div>
+                  <div class="relative">
+                    <img
+                      class="aspect-video h-auto w-full object-cover md:w-80"
+                      src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
+                    />
+                    <cover
+                      class="absolute inset-0 flex items-center justify-center font-light text-white backdrop-brightness-[.25]"
+                    >
+                      Current Episode
+                    </cover>
+                  </div>
+                  <div class="mt-2 flex flex-row gap-3 text-sm font-light">
+                    {/* prettier-ignore */}
+                    <span class="font-semibold">
+                      S{episode.season.season_num} E{episode.episode_num}
+                    </span>
+                    <span class="text-slate-400">
+                      {getNiceDate(episode.published_at)}
+                    </span>
+                  </div>
+                  <span class="leading-tight">{episode.title}</span>
+                </div>
+              </div>
+              {
+                otherEpisodesBefore.length > 0 ? (
+                  otherEpisodesBefore.map((episode) => (
+                    <div class="w-full md:w-80">
+                      <a
+                        href={`/episodes/s${episode.season.season_num}e${episode.episode_num}`}
+                      >
+                        <img
+                          class="aspect-video h-auto w-full object-cover transition-all hover:brightness-75 md:w-80"
+                          src={`https://meta.contactsplus.live/assets/${episode.thumbnail}`}
+                        />
+                        <div class="mt-2 flex flex-row gap-3 text-sm font-light">
+                          {/* prettier-ignore */}
+                          <span class="font-semibold">
+                          S{episode.season.season_num} E{episode.episode_num}
+                        </span>
+                          <span class="text-slate-400">
+                            {getNiceDate(episode.published_at)}
+                          </span>
+                        </div>
+                        <span class="leading-tight">{episode.title}</span>
+                      </a>
+                    </div>
+                  ))
+                ) : (
+                  <p class="flex items-center justify-center font-light">
+                    You've reached the end of time...
+                  </p>
+                )
               }
             </div>
           </div>

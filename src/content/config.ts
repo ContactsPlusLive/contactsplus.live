@@ -58,7 +58,7 @@ const episodeCollection = defineCollection({
 });
 
 export const collections = {
-  episodes: episodeCollection,
+  // episodes: episodeCollection,
 };
 
 export const getCrewRoles = (roles: string | string[]): string => {

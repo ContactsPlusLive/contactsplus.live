@@ -1,0 +1,109 @@
+---
+export interface Props {
+  // people is from ../../lib/directus.ts
+  people: {
+    name: string;
+    staff_title: string;
+    portrait: string;
+    discord?: string;
+    telegram?: string;
+    bsky?: string;
+    fediverse?: string;
+    website?: string;
+    xitter?: string;
+  };
+}
+
+const { people } = Astro.props;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTelegram,
+  faDiscord,
+  faXTwitter,
+  faBluesky,
+} from "@fortawesome/free-brands-svg-icons";
+import { faLink, faGlobe } from "@fortawesome/free-solid-svg-icons";
+---
+
+<div
+  class="flex w-60 flex-col items-center rounded-lg border border-slate-700 bg-slate-900 p-4 md:w-48"
+>
+  <img
+    src={`https://meta.contactsplus.live/assets/${people.portrait}`}
+    class="h-32 w-32 rounded-full object-cover"
+  />
+  <h3 class="mt-4 text-xl font-bold tracking-tight">{people.name}</h3>
+  <p class="mt-2 text-lg font-medium tracking-tight">{people.staff_title}</p>
+  <div class="mt-4 flex flex-row flex-wrap items-center justify-center gap-2">
+    {
+      people.discord && (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={`https://discord.com/users/${people.discord}`}
+          class="w-8"
+        >
+          <FontAwesomeIcon icon={faDiscord} />
+        </a>
+      )
+    }
+    {
+      people.website && (
+        <a target="_blank" rel="noreferrer" href={people.website} class="w-8">
+          <FontAwesomeIcon icon={faLink} />
+        </a>
+      )
+    }
+    {
+      people.xitter && (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={`https://x.com/${people.xitter}`}
+          class="w-8"
+        >
+          <FontAwesomeIcon icon={faXTwitter} />
+        </a>
+      )
+    }
+    {
+      people.bsky && (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={`https://bsky.app/profile/${people.bsky}`}
+          class="w-8"
+        >
+          <FontAwesomeIcon icon={faBluesky} />
+        </a>
+      )
+    }
+    {
+      people.fediverse && (
+        // popover to show the fediverse link
+        <a
+          target="_blank"
+          rel="noreferrer"
+          class="group relative w-8 cursor-pointer"
+        >
+          <span class="absolute -left-6 -top-6 z-10 hidden rounded bg-slate-800 px-3 py-2 text-xs text-white shadow-md group-hover:block">
+            {people.fediverse}
+          </span>
+          <FontAwesomeIcon icon={faGlobe} />
+        </a>
+      )
+    }
+    {
+      people.telegram && (
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={`https://t.me/${people.telegram}`}
+          class="w-8"
+        >
+          <FontAwesomeIcon icon={faTelegram} />
+        </a>
+      )
+    }
+  </div>
+</div>
